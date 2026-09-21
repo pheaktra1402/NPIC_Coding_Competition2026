@@ -1,10 +1,25 @@
 import React, { useState } from 'react';
 import { CUISINE, CULTURE_ARTS } from '../data/tourismData';
 import { Utensils, Music, Flame } from 'lucide-react';
+import { getTranslation } from '../data/translations';
 import SafeImage from './SafeImage';
 
 export default function CultureSection({ lang }) {
   const [activeTab, setActiveTab] = useState('cuisine');
+
+  const getFoodTitle = (food) => {
+    if (lang === 'KM') return food.name;
+    if (lang === 'ZH') return food.zhName || food.name;
+    if (lang === 'FR') return food.frName || food.name;
+    return food.name;
+  };
+
+  const getArtTitle = (item) => {
+    if (lang === 'KM') return item.title;
+    if (lang === 'ZH') return item.zhTitle || item.title;
+    if (lang === 'FR') return item.frTitle || item.title;
+    return item.title;
+  };
 
   return (
     <section id="culture" className="site-section section-surface-alt relative">
@@ -12,21 +27,14 @@ export default function CultureSection({ lang }) {
         <div className="section-header">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-500 dark:text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
             <Utensils className="w-3.5 h-3.5" />
-            <span>{lang === 'EN' ? 'HERITAGE & FLAVORS' : 'វប្បធម៌ និងអាហារ'}</span>
+            <span>{getTranslation('culture.badge', lang)}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
-            {lang === 'EN' ? (
-              <>
-                Rich Khmer <span className="gold-gradient-text">Culture & Flavors</span>
-              </>
-            ) : (
-              <span className="khmer-font text-amber-500 dark:text-amber-300">វប្បធម៌ និងរសជាតិអាហារខ្មែរ</span>
-            )}
+            <span>{getTranslation('culture.titlePrefix', lang)} </span>
+            <span className="gold-gradient-text">{getTranslation('culture.titleHighlight', lang)}</span>
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg">
-            {lang === 'EN'
-              ? 'Taste mouth-watering fragrant curries and experience UNESCO classical performing arts and vibrant local festivals.'
-              : 'ភ្លក់រសជាតិអាហារដ៏ឆ្ងាញ់ពិសា និងទស្សនាសិល្បៈវប្បធម៌ខ្មែរ។'}
+          <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
+            {getTranslation('culture.desc', lang)}
           </p>
         </div>
 
@@ -42,7 +50,7 @@ export default function CultureSection({ lang }) {
             }`}
           >
             <Utensils className="w-4 h-4" />
-            <span>{lang === 'EN' ? 'Khmer Cuisine' : 'ម្ហូបអាហារខ្មែរ'}</span>
+            <span>{getTranslation('culture.tabCuisine', lang)}</span>
           </button>
 
           <button
@@ -55,98 +63,103 @@ export default function CultureSection({ lang }) {
             }`}
           >
             <Music className="w-4 h-4" />
-            <span>{lang === 'EN' ? 'Arts & Festivals' : 'សិល្បៈ និងបុណ្យប្រពៃណី'}</span>
+            <span>{getTranslation('culture.tabArts', lang)}</span>
           </button>
         </div>
 
         {/* Cuisine Cards Grid */}
         {activeTab === 'cuisine' && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {CUISINE.map((food) => (
-              <div
-                key={food.id}
-                className="glass-card rounded-2xl overflow-hidden glass-card-hover border border-slate-200 dark:border-slate-800 flex flex-col justify-between group"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <SafeImage
-                    src={food.image}
-                    alt={food.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-                  <span className="absolute top-3 right-3 bg-slate-900/80 px-2.5 py-1 rounded-full text-[11px] font-bold text-amber-300 border border-slate-700">
-                    {food.category}
-                  </span>
-                </div>
-
-                <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center gap-1 text-xs text-amber-500 dark:text-amber-400 font-bold mb-1">
-                      <Flame className="w-3.5 h-3.5 text-amber-500" />
-                      <span>{food.spiciness}</span>
-                    </div>
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{food.name}</h3>
-                    <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-3">
-                      {food.description}
-                    </p>
-                  </div>
-
-                  {/* Key Ingredients */}
-                  <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1.5">
-                      {lang === 'EN' ? 'Key Ingredients:' : 'គ្រឿងផ្សំសំខាន់ៗ៖'}
+            {CUISINE.map((food) => {
+              const title = getFoodTitle(food);
+              return (
+                <div
+                  key={food.id}
+                  className="glass-card rounded-2xl overflow-hidden glass-card-hover border border-slate-200 dark:border-slate-800 flex flex-col justify-between group"
+                >
+                  <div className="relative h-48 overflow-hidden bg-slate-900">
+                    <SafeImage
+                      src={food.image}
+                      alt={title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+                    <span className="absolute top-3 right-3 bg-slate-900/80 px-2.5 py-1 rounded-full text-[11px] font-bold text-amber-300 border border-slate-700">
+                      {food.category}
                     </span>
-                    <div className="flex flex-wrap gap-1">
-                      {food.ingredients.map((ing, idx) => (
-                        <span
-                          key={idx}
-                          className="text-[11px] bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-300 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700/60"
-                        >
-                          {ing}
-                        </span>
-                      ))}
+                  </div>
+
+                  <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-1 text-xs text-amber-500 dark:text-amber-400 font-bold mb-1">
+                        <Flame className="w-3.5 h-3.5 text-amber-500" />
+                        <span>{food.spiciness}</span>
+                      </div>
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{title}</h3>
+                      <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-3">
+                        {food.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1.5">
+                        {getTranslation('culture.ingredients', lang)}
+                      </span>
+                      <div className="flex flex-wrap gap-1">
+                        {food.ingredients.map((ing, idx) => (
+                          <span
+                            key={idx}
+                            className="text-[11px] bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-300 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700/60"
+                          >
+                            {ing}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
         {/* Performing Arts & Festivals Grid */}
         {activeTab === 'culture' && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {CULTURE_ARTS.map((item) => (
-              <div
-                key={item.id}
-                className="glass-card rounded-2xl overflow-hidden glass-card-hover border border-slate-200 dark:border-slate-800 flex flex-col justify-between group"
-              >
-                <div className="relative h-60 overflow-hidden">
-                  <SafeImage
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
-                  <span className="absolute top-4 left-4 glass-panel px-3 py-1 rounded-full text-xs font-bold text-amber-300 border border-amber-500/30">
-                    {item.type}
-                  </span>
-                </div>
-
-                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{item.title}</h3>
-                    <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
-                      {item.summary}
-                    </p>
+            {CULTURE_ARTS.map((item) => {
+              const title = getArtTitle(item);
+              return (
+                <div
+                  key={item.id}
+                  className="glass-card rounded-2xl overflow-hidden glass-card-hover border border-slate-200 dark:border-slate-800 flex flex-col justify-between group"
+                >
+                  <div className="relative h-60 overflow-hidden bg-slate-900">
+                    <SafeImage
+                      src={item.image}
+                      alt={title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
+                    <span className="absolute top-4 left-4 glass-panel px-3 py-1 rounded-full text-xs font-bold text-amber-300 border border-amber-500/30">
+                      {item.type}
+                    </span>
                   </div>
 
-                  <div className="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 italic">
-                    💡 {item.details}
+                  <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{title}</h3>
+                      <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
+                        {item.summary}
+                      </p>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 italic">
+                      💡 {item.details}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

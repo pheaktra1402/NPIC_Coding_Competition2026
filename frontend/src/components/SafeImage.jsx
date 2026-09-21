@@ -1,30 +1,23 @@
 import React, { useState } from 'react';
+import { getOfflineIllustration } from '../data/localImages';
 
-export default function SafeImage({ src, alt, className = '', eager = false }) {
+export default function SafeImage({ src, alt = 'Cambodia Tourism', className = '', eager = false }) {
   const [failed, setFailed] = useState(false);
 
-  if (failed || !src) {
-    return (
-      <div
-        className={`${className} bg-gradient-to-br from-slate-800 via-slate-900 to-amber-950 flex items-center justify-center`}
-        role="img"
-        aria-label={alt}
-      >
-        <span className="px-3 text-center text-[11px] font-bold uppercase tracking-wider text-amber-200/80">
-          {alt}
-        </span>
-      </div>
-    );
-  }
+  // If missing or failed, fall back to offline SVG illustration vector
+  const fallbackSvg = getOfflineIllustration('General', alt);
+  const imageSrc = failed || !src ? fallbackSvg : src;
 
   return (
     <img
-      src={src}
+      src={imageSrc}
       alt={alt}
       className={className}
       loading={eager ? 'eager' : 'lazy'}
       decoding="async"
-      onError={() => setFailed(true)}
+      onError={() => {
+        if (!failed) setFailed(true);
+      }}
     />
   );
 }

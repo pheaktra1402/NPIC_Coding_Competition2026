@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ITINERARIES } from '../data/tourismData';
 import { Calendar, Clock, Sparkles, CheckCircle2 } from 'lucide-react';
+import { getTranslation } from '../data/translations';
 
 export default function ItineraryPlanner({ onOpenBooking, lang }) {
   const [selectedItineraryId, setSelectedItineraryId] = useState('3-day-angkor');
@@ -10,53 +11,53 @@ export default function ItineraryPlanner({ onOpenBooking, lang }) {
 
   const activeItinerary = ITINERARIES.find((i) => i.id === selectedItineraryId) || ITINERARIES[0];
 
+  const getItineraryTitle = (item) => {
+    if (lang === 'KM') return item.title;
+    if (lang === 'ZH') return item.zhTitle || item.title;
+    if (lang === 'FR') return item.frTitle || item.title;
+    return item.title;
+  };
+
   return (
     <section id="itineraries" className="site-section relative">
       <div className="site-container">
         <div className="section-header">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
             <Calendar className="w-3.5 h-3.5" />
-            <span>{lang === 'EN' ? 'TRIP PLANNING TOOLS' : 'កម្មវិធីដំណើរកម្សាន្ត'}</span>
+            <span>{getTranslation('itineraries.badge', lang)}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
-            {lang === 'EN' ? (
-              <>
-                Curated <span className="gold-gradient-text">Travel Itineraries</span>
-              </>
-            ) : (
-              <span className="khmer-font text-amber-500 dark:text-amber-300">រៀបចំគម្រោងដំណើរកម្សាន្ត</span>
-            )}
+            <span>{getTranslation('itineraries.titlePrefix', lang)} </span>
+            <span className="gold-gradient-text">{getTranslation('itineraries.titleHighlight', lang)}</span>
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg">
-            {lang === 'EN'
-              ? 'Hand-crafted day-by-day routes designed by local travel experts for the perfect Cambodian experience.'
-              : 'កម្មវិធីដើរកម្សាន្តតាមថ្ងៃដែលរៀបចំដោយអ្នកជំនាញទេសចរណ៍។'}
+          <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
+            {getTranslation('itineraries.desc', lang)}
           </p>
         </div>
 
         <div className="glass-card max-w-3xl mx-auto mb-8 p-5 rounded-2xl border border-amber-500/30 flex flex-col sm:flex-row gap-3 items-stretch sm:items-end">
           <label className="flex-1 text-xs font-bold text-slate-600 dark:text-slate-300">
-            {lang === 'EN' ? 'How many days?' : 'ប៉ុន្មានថ្ងៃ?'}
+            Duration
             <select
               value={tripDays}
               onChange={(e) => setTripDays(e.target.value)}
               className="mt-1.5 w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-sm font-semibold"
             >
-              <option value="3">3 {lang === 'EN' ? 'days' : 'ថ្ងៃ'}</option>
-              <option value="5">5 {lang === 'EN' ? 'days' : 'ថ្ងៃ'}</option>
-              <option value="7">7 {lang === 'EN' ? 'days' : 'ថ្ងៃ'}</option>
+              <option value="3">3 Days</option>
+              <option value="5">5 Days</option>
+              <option value="7">7 Days</option>
             </select>
           </label>
           <label className="flex-1 text-xs font-bold text-slate-600 dark:text-slate-300">
-            {lang === 'EN' ? 'Trip vibe' : 'រចនាប័ទ្ម'}
+            Style
             <select
               value={tripStyle}
               onChange={(e) => setTripStyle(e.target.value)}
               className="mt-1.5 w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-sm font-semibold"
             >
-              <option value="history">{lang === 'EN' ? 'Temples & history' : 'ប្រាសាទ និងប្រវត្តិ'}</option>
-              <option value="beach">{lang === 'EN' ? 'Beach & nature' : 'ឆ្នេរ និងធម្មជាតិ'}</option>
-              <option value="mix">{lang === 'EN' ? 'A bit of everything' : 'ចម្រុះ'}</option>
+              <option value="history">Temples & History</option>
+              <option value="beach">Beach & Coastal</option>
+              <option value="mix">Complete Experience</option>
             </select>
           </label>
           <button
@@ -71,9 +72,9 @@ export default function ItineraryPlanner({ onOpenBooking, lang }) {
               setSelectedItineraryId(match);
               setActiveDayNumber(1);
             }}
-            className="px-5 py-2.5 rounded-xl bg-amber-500 text-slate-950 text-xs font-extrabold"
+            className="px-5 py-2.5 rounded-xl bg-amber-500 text-slate-950 text-xs font-extrabold cursor-pointer"
           >
-            {lang === 'EN' ? 'Match me a route' : 'រកកម្មវិធីសម'}
+            Find Route
           </button>
         </div>
 
@@ -86,6 +87,7 @@ export default function ItineraryPlanner({ onOpenBooking, lang }) {
                 setSelectedItineraryId(item.id);
                 setActiveDayNumber(1);
               }}
+              type="button"
               className={`p-6 rounded-2xl text-left transition-all duration-300 cursor-pointer flex flex-col justify-between ${
                 selectedItineraryId === item.id
                   ? 'glass-panel border-amber-500 bg-amber-500/10 shadow-xl shadow-amber-500/10 ring-2 ring-amber-400'
@@ -102,12 +104,11 @@ export default function ItineraryPlanner({ onOpenBooking, lang }) {
                     {item.style}
                   </span>
                 </div>
-                {/* Fixed Card Title Contrast */}
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{item.title}</h3>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{getItineraryTitle(item)}</h3>
               </div>
 
               <div className="pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span>Estimated Budget:</span>
+                <span>{getTranslation('itineraries.budget', lang)}</span>
                 <span className="font-extrabold text-amber-600 dark:text-amber-300">{item.budget}</span>
               </div>
             </button>
@@ -116,43 +117,42 @@ export default function ItineraryPlanner({ onOpenBooking, lang }) {
 
         {/* Active Itinerary Day Timeline Box */}
         <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-amber-500/30 shadow-2xl space-y-8 bg-white dark:bg-slate-900/90">
-          {/* Header Info */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
             <div>
               <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">
                 <Sparkles className="w-4 h-4" />
                 <span>{activeItinerary.duration} • {activeItinerary.style}</span>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">{activeItinerary.title}</h3>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">{getItineraryTitle(activeItinerary)}</h3>
             </div>
 
             <button
-              onClick={() => onOpenBooking(activeItinerary.title)}
+              type="button"
+              onClick={() => onOpenBooking(getItineraryTitle(activeItinerary))}
               className="px-6 py-3 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-extrabold rounded-xl shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 cursor-pointer hover:scale-105 transition-transform text-xs"
             >
               <Sparkles className="w-4 h-4" />
-              <span>{lang === 'EN' ? 'Book This Custom Itinerary' : 'កក់កម្មវិធីនេះ'}</span>
+              <span>{getTranslation('itineraries.planThis', lang)}</span>
             </button>
           </div>
 
-          {/* Day Navigation Pills */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2">
             {activeItinerary.days.map((d) => (
               <button
                 key={d.day}
                 onClick={() => setActiveDayNumber(d.day)}
+                type="button"
                 className={`px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                   activeDayNumber === d.day
                     ? 'bg-amber-400 text-slate-950 shadow-md'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-white border border-slate-200 dark:border-slate-700'
                 }`}
               >
-                Day {d.day}
+                {getTranslation('itineraries.dayLabel', lang)} {d.day}
               </button>
             ))}
           </div>
 
-          {/* Active Day Content */}
           {activeItinerary.days.map((dayData) => {
             if (dayData.day !== activeDayNumber) return null;
             return (

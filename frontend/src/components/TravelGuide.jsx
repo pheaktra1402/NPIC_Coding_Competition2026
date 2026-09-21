@@ -1,26 +1,31 @@
 import React, { useState } from 'react';
 import { TRAVEL_GUIDE } from '../data/tourismData';
 import { FileText, DollarSign, Sun, Bus, ShieldCheck, RefreshCw, CheckCircle } from 'lucide-react';
+import { getTranslation } from '../data/translations';
 
 export default function TravelGuide({ lang }) {
   const [usdAmount, setUsdAmount] = useState(10);
   const [openFaq, setOpenFaq] = useState(0);
   const rielRate = 4100;
 
-  const faqs =
-    lang === 'EN'
-      ? [
-          { q: 'Do I need a visa?', a: 'Most visitors use the official e-Visa ($30, 30 days) at evisa.gov.kh, or visa on arrival at PNH and SAI airports.' },
-          { q: 'Is US dollars accepted?', a: 'Yes. USD and riel are used together. Change under $1 is usually given in riel. ABA / Bakong QR is common in towns.' },
-          { q: 'When is the best time to visit?', a: 'November–February is cool and dry — ideal for temples. March–May is hotter and great for islands. June–October is lush with fewer crowds.' },
-          { q: 'What should I wear at temples?', a: 'Cover shoulders and knees. A light scarf helps at Angkor. Remove hats in wats. Sunrise visits are cooler and less crowded.' },
-        ]
-      : [
-          { q: 'តើខ្ញុំត្រូវការទិដ្ឋាការទេ?', a: 'ភ្ញៀវភាគច្រើនអាចដាក់ពាក្យ e-Visa $30 តាម evisa.gov.kh ឬទិញនៅពេលមកដល់ព្រលានយន្តហោះ។' },
-          { q: 'តើដុល្លារអាមេរិកប្រើបានទេ?', a: 'បាន។ ដុល្លារ និងរៀលប្រើជាមួយគ្នា។ ការផ្លាស់ប្តូរក្រោម $1 ជាធម្មតាជារៀល។' },
-          { q: 'ពេលណាល្អបំផុតសម្រាប់ធ្វើដំណើរ?', a: 'វិច្ឆិកា–កុម្ភៈ ត្រជាក់ និងស្ងួត។ មីនា–ឧសភា ក្តៅ ល្អសម្រាប់កោះ។ មិថុនា–តុលា ពណ៌បៃតង មនុស្សតិច។' },
-          { q: 'សម្លៀកបំពាក់នៅប្រាសាទ?', a: 'គួរគ្របស្មា និងជង្គង់។ ព្រឹកព្រលឹមត្រជាក់ និងមនុស្សតិចជាង។' },
-        ];
+  const faqs = [
+    {
+      q: lang === 'KM' ? 'តើខ្ញុំត្រូវការទិដ្ឋាការទេ?' : lang === 'ZH' ? '我需要办理签证吗？' : lang === 'FR' ? 'Ai-je besoin d\'un visa ?' : 'Do I need a visa?',
+      a: lang === 'KM' ? 'ភ្ញៀវភាគច្រើនអាចដាក់ពាក្យ e-Visa $30 តាម evisa.gov.kh ឬទិញនៅពេលមកដល់ព្រលានយន្តហោះ។' : lang === 'ZH' ? '大多数游客可以通过官方网站 (evisa.gov.kh) 申请电子签证（$30，30天），或在金边及暹粒国际机场办理落地签。' : lang === 'FR' ? 'La plupart des visiteurs peuvent demander un e-Visa (30$) sur evisa.gov.kh ou obtenir un visa à l\'arrivée.' : 'Most visitors use the official e-Visa ($30, 30 days) at evisa.gov.kh, or visa on arrival at PNH and SAI airports.'
+    },
+    {
+      q: lang === 'KM' ? 'តើដុល្លារអាមេរិកប្រើបានទេ?' : lang === 'ZH' ? '当地接受美元支付吗？' : lang === 'FR' ? 'Le dollar américain est-il accepté ?' : 'Is US dollars accepted?',
+      a: lang === 'KM' ? 'បាន។ ដុល្លារ និងរៀលប្រើជាមួយគ្នា។ ការផ្លាស់ប្តូរក្រោម $1 ជាធម្មតាជារៀល។' : lang === 'ZH' ? '是的。美元与瑞尔在柬埔寨全国通用。找零在1美元以下通常给瑞尔。商店广泛支持ABA / Bakong QR扫码。' : lang === 'FR' ? 'Oui. Les USD et le Riel sont acceptés partout. La monnaie inférieure à 1$ est rendue en riels.' : 'Yes. USD and riel are used together. Change under $1 is usually given in riel. ABA / Bakong QR is common in towns.'
+    },
+    {
+      q: lang === 'KM' ? 'ពេលណាល្អបំផុតសម្រាប់ធ្វើដំណើរ?' : lang === 'ZH' ? '什么时候是最佳旅游季节？' : lang === 'FR' ? 'Quelle est la meilleure période ?' : 'When is the best time to visit?',
+      a: lang === 'KM' ? 'វិច្ឆិកា–កុម្ភៈ ត្រជាក់ និងស្ងួត។ មីនា–ឧសភា ក្តៅ ល្អសម្រាប់កោះ។ មិថុនា–តុលា ពណ៌បៃតង មនុស្សតិច។' : lang === 'ZH' ? '11月至次年2月凉爽干燥，是游览神庙的最佳时节；3月至5月气候炎热，适合前往海岛度假；6月至10月为雨季绿季，景色宜人且游客较少。' : lang === 'FR' ? 'Novembre-Février est frais et sec — idéal pour les temples. Mars-Mai est plus chaud pour les îles.' : 'November–February is cool and dry — ideal for temples. March–May is hotter and great for islands. June–October is lush with fewer crowds.'
+    },
+    {
+      q: lang === 'KM' ? 'សម្លៀកបំពាក់នៅប្រាសាទ?' : lang === 'ZH' ? '进入神庙参观有何着装要求？' : lang === 'FR' ? 'Code vestimentaire dans les temples ?' : 'What should I wear at temples?',
+      a: lang === 'KM' ? 'គួរគ្របស្មា និងជង្គង់។ ព្រឹកព្រលឹមត្រជាក់ និងមនុស្សតិចជាង។' : lang === 'ZH' ? '参观神庙请务必穿遮盖肩膀与膝盖的衣服。进入殿堂请脱帽。清晨日出时分游览体感较凉爽。' : lang === 'FR' ? 'Vêtements couvrant les épaules et les genoux obligatoires. Retirez vos chapeaux dans les sanctuaires.' : 'Cover shoulders and knees. A light scarf helps at Angkor. Remove hats in wats. Sunrise visits are cooler and less crowded.'
+    }
+  ];
 
   return (
     <section id="travel-guide" className="site-section section-surface-alt relative">
@@ -28,21 +33,14 @@ export default function TravelGuide({ lang }) {
         <div className="section-header">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>{lang === 'EN' ? 'ESSENTIAL TRAVELER KNOWLEDGE' : 'ព័ត៌មានធ្វើដំណើរ'}</span>
+            <span>{getTranslation('guide.badge', lang)}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
-            {lang === 'EN' ? (
-              <>
-                Cambodia <span className="gold-gradient-text">Travel Essentials</span>
-              </>
-            ) : (
-              <span className="khmer-font text-amber-500 dark:text-amber-300">ព័ត៌មានសំខាន់ៗសម្រាប់អ្នកទេសចរ</span>
-            )}
+            <span>{getTranslation('guide.titlePrefix', lang)} </span>
+            <span className="gold-gradient-text">{getTranslation('guide.titleHighlight', lang)}</span>
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg">
-            {lang === 'EN'
-              ? 'Everything you need to know about entry visas, dual-currency tips, weather seasons, and getting around.'
-              : 'រាល់ព័ទ៌មានអំពីទិដ្ឋាការ រូបិយប័ណ្ណ រដូវកាល និងការធ្វើដំណើរ។'}
+          <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
+            {getTranslation('guide.desc', lang)}
           </p>
         </div>
 
@@ -64,7 +62,7 @@ export default function TravelGuide({ lang }) {
 
             <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-2">
               <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
-                {lang === 'EN' ? 'Required Documents:' : 'ឯកសារតម្រូវ៖'}
+                {getTranslation('guide.requirements', lang)}
               </span>
               {TRAVEL_GUIDE.visa.requirements.map((req, idx) => (
                 <div key={idx} className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 font-medium">
@@ -87,7 +85,6 @@ export default function TravelGuide({ lang }) {
               </p>
             </div>
 
-            {/* Interactive Currency Converter Box */}
             <div className="glass-panel p-4 rounded-2xl border border-amber-500/30 space-y-3 bg-slate-50 dark:bg-slate-950">
               <div className="flex items-center justify-between text-xs font-bold text-amber-600 dark:text-amber-300">
                 <span>USD to KHR Calculator</span>
@@ -152,14 +149,14 @@ export default function TravelGuide({ lang }) {
 
         <div className="mt-8 max-w-3xl mx-auto space-y-3">
           <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 text-center">
-            {lang === 'EN' ? 'Quick answers' : 'សំណួរញឹកញាប់'}
+            Frequently Asked Questions
           </h3>
           {faqs.map((faq, idx) => (
             <button
               key={faq.q}
               type="button"
               onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-              className="w-full text-left glass-card p-4 rounded-2xl border border-slate-200 dark:border-slate-800"
+              className="w-full text-left glass-card p-4 rounded-2xl border border-slate-200 dark:border-slate-800 cursor-pointer"
             >
               <div className="flex items-center justify-between gap-3">
                 <span className="font-bold text-sm text-slate-900 dark:text-white">{faq.q}</span>

@@ -1,15 +1,16 @@
 import React, { useMemo, useState } from 'react';
 import { Search, ArrowRight, Sparkles, ChevronDown, MapPin } from 'lucide-react';
 import { DESTINATIONS } from '../data/tourismData';
+import { getOfflineIllustration, LOCAL_PROVINCE_IMAGES } from '../data/localImages';
+import { getTranslation } from '../data/translations';
 import SafeImage from './SafeImage';
-
-const HERO_IMAGE =
-  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80';
 
 export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCat, setSelectedCat] = useState('All');
   const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const heroBg = LOCAL_PROVINCE_IMAGES['siem-reap'] || getOfflineIllustration('Heritage', 'Angkor Wat Sunrise');
 
   const suggestions = useMemo(() => {
     const q = searchTerm.trim().toLowerCase();
@@ -17,7 +18,8 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
     return DESTINATIONS.filter(
       (d) =>
         d.name.toLowerCase().includes(q) ||
-        d.khmerName.includes(searchTerm) ||
+        (d.khmerName && d.khmerName.includes(searchTerm)) ||
+        (d.zhName && d.zhName.includes(searchTerm)) ||
         d.category.toLowerCase().includes(q)
     ).slice(0, 5);
   }, [searchTerm]);
@@ -35,30 +37,30 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
   };
 
   const quickChips = [
-    { label: lang === 'EN' ? 'Angkor' : 'អង្គរ', term: 'Siem Reap', cat: 'Temples' },
-    { label: lang === 'EN' ? 'Koh Rong' : 'កោះរ៉ុង', term: 'Koh Rong', cat: 'Beaches' },
-    { label: lang === 'EN' ? 'Phnom Penh' : 'ភ្នំពេញ', term: 'Phnom Penh', cat: 'Culture' },
-    { label: lang === 'EN' ? 'Kampot' : 'កំពត', term: 'Kampot', cat: 'Food' },
+    { label: lang === 'KM' ? 'អង្គរ' : lang === 'ZH' ? '吴哥窟' : lang === 'FR' ? 'Angkor' : 'Angkor', term: 'Siem Reap', cat: 'Temples' },
+    { label: lang === 'KM' ? 'កោះរ៉ុង' : lang === 'ZH' ? '高龙岛' : lang === 'FR' ? 'Koh Rong' : 'Koh Rong', term: 'Koh Rong', cat: 'Beaches' },
+    { label: lang === 'KM' ? 'ភ្នំពេញ' : lang === 'ZH' ? '金边' : lang === 'FR' ? 'Phnom Penh' : 'Phnom Penh', term: 'Phnom Penh', cat: 'Culture' },
+    { label: lang === 'KM' ? 'កំពត' : lang === 'ZH' ? '贡布' : lang === 'FR' ? 'Kampot' : 'Kampot', term: 'Kampot', cat: 'Food' },
   ];
 
   const stats = [
-    { value: '1,000+', label: lang === 'EN' ? 'Ancient temples' : 'ប្រាសាទបុរាណ', cls: 'gold-gradient-text' },
-    { value: '7', label: lang === 'EN' ? 'UNESCO sites' : 'បេតិកភណ្ឌពិភពលោក', cls: 'gold-gradient-text' },
-    { value: '440 km', label: lang === 'EN' ? 'Coastline' : 'ឆ្នេរសមុទ្រ', cls: 'cyan-gradient-text' },
-    { value: '25', label: lang === 'EN' ? 'Provinces' : 'រាជធានី-ខេត្ត', cls: 'emerald-gradient-text' },
+    { value: '1,000+', label: getTranslation('hero.statTemples', lang), cls: 'gold-gradient-text' },
+    { value: '7', label: getTranslation('hero.statUnesco', lang), cls: 'gold-gradient-text' },
+    { value: '440 km', label: getTranslation('hero.statCoast', lang), cls: 'cyan-gradient-text' },
+    { value: '25', label: getTranslation('hero.statProvinces', lang), cls: 'emerald-gradient-text' },
   ];
 
   return (
     <section className="relative min-h-[100svh] flex items-center overflow-hidden pt-[5.75rem] pb-16 sm:pb-20">
       <div className="absolute inset-0 z-0 bg-slate-950">
         <SafeImage
-          src={HERO_IMAGE}
-          alt="Angkor Wat at sunrise"
+          src={heroBg}
+          alt="Angkor Wat Sunrise"
           eager
           className="absolute inset-0 w-full h-full object-cover object-center scale-105 animate-pulse-slow"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/45" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-950/25 to-slate-950/55" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/30 to-slate-950/60" />
       </div>
 
       <div className="relative z-10 site-container w-full">
@@ -67,41 +69,34 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-card border border-amber-400/50 mb-5 shadow-xl shadow-amber-500/10">
               <Sparkles className="w-4 h-4 text-amber-400" />
               <span className="text-[11px] font-bold tracking-widest uppercase text-amber-300">
-                {lang === 'EN' ? 'Kingdom of Wonder travel guide' : 'មគ្គុទ្ទេសក៍ទេសចរណ៍កម្ពុជា'}
+                {getTranslation('hero.badge', lang)}
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-extrabold tracking-tight text-white mb-4 max-w-xl mx-auto lg:mx-0 leading-[1.15] drop-shadow-lg">
-              {lang === 'EN' ? (
-                <>
-                  Discover the <span className="gold-gradient-text">Kingdom of Wonder</span>
-                </>
-              ) : (
-                <span className="khmer-font text-amber-300 leading-snug">ស្វែងយល់ពីព្រះរាជាណាចក្រកម្ពុជា</span>
-              )}
+            <h1 className="text-3xl sm:text-5xl xl:text-6xl font-extrabold tracking-tight text-white mb-4 max-w-xl mx-auto lg:mx-0 leading-[1.15] drop-shadow-lg">
+              <span>{getTranslation('hero.titlePrefix', lang)} </span>
+              <span className="gold-gradient-text">{getTranslation('hero.titleHighlight', lang)}</span>
             </h1>
 
             <p className="text-base sm:text-lg text-slate-200 max-w-lg mx-auto lg:mx-0 mb-7 leading-relaxed">
-              {lang === 'EN'
-                ? 'Ancient temples, turquoise islands, Khmer cuisine, and warm hospitality — search a place, save a shortlist, then request a custom tour.'
-                : 'ទស្សនាប្រាសាទបុរាណ កោះសមុទ្រ ម្ហូបឆ្ងាញ់ និងការស្វាគមន៍កក់ក្តៅ — ស្វែងរក រក្សាទុក និងស្នើសុំដំណើរផ្ទាល់ខ្លួន។'}
+              {getTranslation('hero.description', lang)}
             </p>
 
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-8">
               <button
                 type="button"
                 onClick={() => onOpenBooking()}
-                className="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 text-sm font-extrabold shadow-lg shadow-amber-500/30 flex items-center gap-2 hover:scale-[1.02] transition-transform"
+                className="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 text-sm font-extrabold shadow-lg shadow-amber-500/30 flex items-center gap-2 hover:scale-[1.02] transition-transform cursor-pointer"
               >
                 <Sparkles className="w-4 h-4" />
-                {lang === 'EN' ? 'Plan my trip' : 'រៀបចំដំណើរ'}
+                <span>{getTranslation('hero.btnPlan', lang)}</span>
               </button>
               <a
                 href="#provinces"
                 className="px-5 py-3 rounded-xl glass-panel border border-amber-400/30 text-amber-100 text-sm font-bold flex items-center gap-2 hover:border-amber-400"
               >
                 <MapPin className="w-4 h-4" />
-                {lang === 'EN' ? 'Browse 25 provinces' : 'មើលខេត្តទាំង ២៥'}
+                <span>{getTranslation('hero.btnProvinces', lang)}</span>
               </a>
             </div>
 
@@ -125,10 +120,10 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
             >
               <div className="text-left mb-1">
                 <p className="text-xs font-extrabold uppercase tracking-wider text-amber-300">
-                  {lang === 'EN' ? 'Where to next?' : 'តើអ្នកចង់ទៅណា?'}
+                  {getTranslation('hero.searchTitle', lang)}
                 </p>
                 <p className="text-xs text-slate-300 mt-1">
-                  {lang === 'EN' ? 'Search a city, temple, island, or food.' : 'ស្វែងរកខេត្ត ប្រាសាទ កោះ ឬម្ហូប។'}
+                  {getTranslation('hero.searchSubtitle', lang)}
                 </p>
               </div>
 
@@ -136,7 +131,7 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-amber-400 pointer-events-none" />
                 <input
                   type="search"
-                  placeholder={lang === 'EN' ? 'Siem Reap, Koh Rong, temples...' : 'សៀមរាប, កោះរ៉ុង, ម្ហូប...'}
+                  placeholder={getTranslation('hero.searchPlaceholder', lang)}
                   value={searchTerm}
                   onChange={(e) => {
                     setSearchTerm(e.target.value);
@@ -154,13 +149,16 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
                         key={d.id}
                         type="button"
                         onMouseDown={() => {
-                          setSearchTerm(d.name);
+                          const destTitle = lang === 'KM' ? d.khmerName : lang === 'ZH' ? d.zhName : d.name;
+                          setSearchTerm(destTitle);
                           setSelectedCat(d.category);
                           runSearch(d.name, d.category);
                         }}
                         className="w-full px-4 py-2.5 text-sm text-slate-200 hover:bg-amber-500/15 flex items-center justify-between gap-3"
                       >
-                        <span className="truncate">{d.name}</span>
+                        <span className="truncate">
+                          {lang === 'KM' ? d.khmerName : lang === 'ZH' ? d.zhName : d.name}
+                        </span>
                         <span className="text-[10px] uppercase font-bold text-amber-400 shrink-0">{d.category}</span>
                       </button>
                     ))}
@@ -175,18 +173,18 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
                   className="flex-1 py-3.5 px-3 bg-slate-950/90 border border-slate-700 rounded-2xl text-slate-100 text-sm font-semibold"
                   aria-label="Category"
                 >
-                  <option value="All">{lang === 'EN' ? 'All categories' : 'គ្រប់ប្រភេទ'}</option>
-                  <option value="Temples">{lang === 'EN' ? 'Ancient temples' : 'ប្រាសាទបុរាណ'}</option>
-                  <option value="Beaches">{lang === 'EN' ? 'Tropical beaches' : 'តំបន់ឆ្នេរ'}</option>
-                  <option value="Culture">{lang === 'EN' ? 'Culture & cities' : 'វប្បធម៌'}</option>
-                  <option value="Food">{lang === 'EN' ? 'Food & cuisine' : 'ម្ហូបអាហារ'}</option>
-                  <option value="Nature">{lang === 'EN' ? 'Nature & wildlife' : 'ធម្មជាតិ'}</option>
+                  <option value="All">{getTranslation('categories.All', lang)}</option>
+                  <option value="Temples">{getTranslation('categories.Temples', lang)}</option>
+                  <option value="Beaches">{getTranslation('categories.Beaches', lang)}</option>
+                  <option value="Culture">{getTranslation('categories.Culture', lang)}</option>
+                  <option value="Food">{getTranslation('categories.Food', lang)}</option>
+                  <option value="Nature">{getTranslation('categories.Nature', lang)}</option>
                 </select>
                 <button
                   type="submit"
-                  className="sm:w-40 px-6 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 font-extrabold rounded-2xl shadow-lg shadow-amber-500/30 flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform"
+                  className="sm:w-40 px-6 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 font-extrabold rounded-2xl shadow-lg shadow-amber-500/30 flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform cursor-pointer"
                 >
-                  <span>{lang === 'EN' ? 'Explore' : 'ស្វែងរក'}</span>
+                  <span>{getTranslation('hero.btnExplore', lang)}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -215,7 +213,7 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
           href="#provinces"
           className="mt-10 mx-auto w-fit text-slate-300 hover:text-amber-300 flex flex-col items-center gap-1 text-xs font-semibold"
         >
-          {lang === 'EN' ? 'Scroll to explore' : 'រំកិលមើលបន្ត'}
+          <span>{getTranslation('hero.scrollExplore', lang)}</span>
           <ChevronDown className="w-5 h-5 animate-bounce" />
         </a>
       </div>
