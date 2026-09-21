@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { CUISINE, CULTURE_ARTS } from '../data/tourismData';
-import { Utensils, Music, Flame, Sparkles, Heart, CheckCircle2, Eye, X } from 'lucide-react';
+import { Utensils, Music, Flame } from 'lucide-react';
+import SafeImage from './SafeImage';
 
 export default function CultureSection({ lang }) {
   const [activeTab, setActiveTab] = useState('cuisine');
-  const [activeItem, setActiveItem] = useState(null);
 
   return (
-    <section id="culture" className="py-24 relative transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+    <section id="culture" className="site-section section-surface-alt relative">
+      <div className="site-container">
+        <div className="section-header">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-500 dark:text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
             <Utensils className="w-3.5 h-3.5" />
             <span>{lang === 'EN' ? 'HERITAGE & FLAVORS' : 'វប្បធម៌ និងអាហារ'}</span>
@@ -32,12 +31,13 @@ export default function CultureSection({ lang }) {
         </div>
 
         {/* Tab Selector Buttons */}
-        <div className="flex items-center justify-center gap-4 mb-12">
+        <div className="flex items-center justify-center gap-3 mb-8">
           <button
             onClick={() => setActiveTab('cuisine')}
-            className={`px-6 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+            type="button"
+            className={`px-5 py-2.5 rounded-2xl text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
               activeTab === 'cuisine'
-                ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-lg shadow-amber-500/25 scale-105'
+                ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-lg shadow-amber-500/25'
                 : 'glass-card text-slate-700 dark:text-slate-300 hover:text-amber-500 border border-slate-200 dark:border-slate-800'
             }`}
           >
@@ -47,9 +47,10 @@ export default function CultureSection({ lang }) {
 
           <button
             onClick={() => setActiveTab('culture')}
-            className={`px-6 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+            type="button"
+            className={`px-5 py-2.5 rounded-2xl text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
               activeTab === 'culture'
-                ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-lg shadow-amber-500/25 scale-105'
+                ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-lg shadow-amber-500/25'
                 : 'glass-card text-slate-700 dark:text-slate-300 hover:text-amber-500 border border-slate-200 dark:border-slate-800'
             }`}
           >
@@ -67,7 +68,7 @@ export default function CultureSection({ lang }) {
                 className="glass-card rounded-2xl overflow-hidden glass-card-hover border border-slate-200 dark:border-slate-800 flex flex-col justify-between group"
               >
                 <div className="relative h-48 overflow-hidden">
-                  <img
+                  <SafeImage
                     src={food.image}
                     alt={food.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
@@ -114,14 +115,14 @@ export default function CultureSection({ lang }) {
 
         {/* Performing Arts & Festivals Grid */}
         {activeTab === 'culture' && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {CULTURE_ARTS.map((item) => (
               <div
                 key={item.id}
                 className="glass-card rounded-2xl overflow-hidden glass-card-hover border border-slate-200 dark:border-slate-800 flex flex-col justify-between group"
               >
                 <div className="relative h-60 overflow-hidden">
-                  <img
+                  <SafeImage
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"

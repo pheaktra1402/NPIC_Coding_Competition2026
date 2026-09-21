@@ -132,7 +132,7 @@ export default function App() {
         <TravelGuide lang={lang} />
       </main>
 
-      <Footer onOpenBooking={handleOpenBooking} lang={lang} />
+      <Footer lang={lang} />
 
       <BookingModal
         isOpen={isBookingOpen}
@@ -157,17 +157,17 @@ export default function App() {
       />
 
       {toast && (
-        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[80] px-4 py-2.5 rounded-full bg-slate-900 text-amber-200 text-xs font-bold shadow-xl border border-amber-500/30">
+        <div className="fixed bottom-24 lg:bottom-8 left-1/2 -translate-x-1/2 z-[80] px-4 py-2.5 rounded-full bg-slate-900 text-amber-200 text-xs font-bold shadow-xl border border-amber-500/30">
           {toast}
         </div>
       )}
 
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
+      <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-2.5">
         {showTop && (
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="w-10 h-10 rounded-full glass-panel border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-amber-500 flex items-center justify-center shadow-lg hover:scale-110 transition-all cursor-pointer"
+            className="w-11 h-11 rounded-full glass-panel border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-amber-500 flex items-center justify-center shadow-lg hover:scale-105 transition-all cursor-pointer"
             title="Scroll to top"
             aria-label="Scroll to top"
           >
@@ -178,10 +178,10 @@ export default function App() {
         <button
           type="button"
           onClick={() => handleOpenBooking()}
-          className="px-5 py-3 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 font-extrabold shadow-xl shadow-amber-500/30 flex items-center gap-2 hover:scale-105 transition-all cursor-pointer"
+          className="lg:hidden px-4 py-3 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 font-extrabold shadow-xl shadow-amber-500/30 flex items-center gap-2"
         >
           <Sparkles className="w-4 h-4" />
-          <span>{lang === 'EN' ? 'Plan Trip' : 'រៀបចំដំណើរកម្សាន្ត'}</span>
+          <span>{lang === 'EN' ? 'Plan trip' : 'រៀបចំដំណើរ'}</span>
         </button>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TEMPLES } from '../data/tourismData';
 import { Sparkles, Eye, Compass, CheckCircle2 } from 'lucide-react';
+import SafeImage from './SafeImage';
 
 export default function TempleSpotlight({ lang }) {
   const [activeTempleId, setActiveTempleId] = useState('angkor-wat');
@@ -9,10 +10,9 @@ export default function TempleSpotlight({ lang }) {
   const selectedTemple = TEMPLES.find((t) => t.id === activeTempleId) || TEMPLES[0];
 
   return (
-    <section id="temples" className="py-24 relative bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+    <section id="temples" className="site-section relative">
+      <div className="site-container relative z-10">
+        <div className="section-header">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
             <Compass className="w-3.5 h-3.5" />
             <span>{lang === 'EN' ? 'UNESCO WORLD HERITAGE SPOTLIGHT' : 'អច្ឆរិយៈប្រាសាទបុរាណ'}</span>
@@ -34,7 +34,7 @@ export default function TempleSpotlight({ lang }) {
         </div>
 
         {/* Temple Selector Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
           {TEMPLES.map((t) => (
             <button
               key={t.id}
@@ -42,9 +42,10 @@ export default function TempleSpotlight({ lang }) {
                 setActiveTempleId(t.id);
                 setActiveHotspotIndex(0);
               }}
-              className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-300 flex items-center gap-2 cursor-pointer ${
+              type="button"
+              className={`px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-300 flex items-center gap-2 cursor-pointer ${
                 activeTempleId === t.id
-                  ? 'bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 shadow-xl shadow-amber-500/20 scale-105'
+                  ? 'bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 shadow-xl shadow-amber-500/20'
                   : 'glass-card text-slate-700 dark:text-slate-300 hover:text-amber-500 dark:hover:text-amber-300 border border-slate-200 dark:border-slate-800'
               }`}
             >
@@ -59,7 +60,7 @@ export default function TempleSpotlight({ lang }) {
         <div className="glass-panel rounded-3xl overflow-hidden border border-amber-500/30 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-0 bg-white dark:bg-slate-900">
           {/* Left Column: Image Canvas */}
           <div className="lg:col-span-7 relative min-h-[360px] sm:min-h-[480px]">
-            <img
+            <SafeImage
               src={selectedTemple.image}
               alt={selectedTemple.name}
               className="w-full h-full object-cover"

@@ -65,7 +65,7 @@ export default function BookingModal({ isOpen, onClose, initialDestination, lang
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in" onClick={resetAndClose}>
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in" onClick={resetAndClose}>
       <div className="glass-panel w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/40 shadow-2xl p-6 sm:p-8 relative bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100" onClick={(e) => e.stopPropagation()}>
         <button
           onClick={resetAndClose}
@@ -84,7 +84,7 @@ export default function BookingModal({ isOpen, onClose, initialDestination, lang
             </h3>
             <p className="text-slate-600 dark:text-slate-300 text-sm max-w-md mx-auto leading-relaxed">
               {lang === 'EN'
-                ? `Thank you, ${name || 'Traveler'}! Your booking request for ${destination} has been saved directly to our database. Our specialist will contact ${email} shortly.`
+                ? `Thank you, ${name || 'Traveler'}! We received your request for ${destination}. A specialist will follow up at ${email}.`
                 : 'សូមអរគុណ! ក្រុមការងារទេសចរណ៍របស់យើងនឹងទាក់ទងទៅលោកអ្នកក្នុងពេលឆាប់ៗនេះ។'}
             </p>
 
