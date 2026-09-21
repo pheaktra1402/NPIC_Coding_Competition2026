@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import ProvincesExplorer from './components/ProvincesExplorer';
 import Destinations from './components/Destinations';
 import TempleSpotlight from './components/TempleSpotlight';
 import CultureSection from './components/CultureSection';
@@ -11,11 +12,24 @@ import Footer from './components/Footer';
 import { Sparkles, ArrowUp } from 'lucide-react';
 
 export default function App() {
+  const [theme, setTheme] = useState('dark');
   const [lang, setLang] = useState('EN');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [bookingDestination, setBookingDestination] = useState('');
+
+  // Toggle dark/light theme class on root body element
+  useEffect(() => {
+    document.documentElement.classList.remove('dark', 'light');
+    document.documentElement.classList.add(theme);
+    document.body.classList.remove('dark', 'light');
+    document.body.classList.add(theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   const handleOpenBooking = (destName = '') => {
     setBookingDestination(destName || 'Siem Reap & Angkor');
@@ -32,15 +46,17 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-amber-500 selection:text-slate-950">
-      {/* Navigation */}
+    <div className={`min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'} font-sans selection:bg-amber-500 selection:text-slate-950`}>
+      {/* Navigation Bar */}
       <Navbar
         onOpenBooking={() => handleOpenBooking()}
         lang={lang}
         setLang={setLang}
+        theme={theme}
+        toggleTheme={toggleTheme}
       />
 
-      {/* Hero Banner with Search */}
+      {/* Hero Banner */}
       <Hero
         onSearch={handleSearch}
         onSelectCategory={setSelectedCategory}
@@ -50,7 +66,13 @@ export default function App() {
 
       {/* Main Content Sections */}
       <main>
-        {/* Destinations & Regions */}
+        {/* NEW: Interactive All 25 Provinces Explorer */}
+        <ProvincesExplorer
+          onOpenBooking={handleOpenBooking}
+          lang={lang}
+        />
+
+        {/* Featured Destinations & Regions */}
         <Destinations
           searchQuery={searchQuery}
           selectedCategory={selectedCategory}
@@ -88,11 +110,11 @@ export default function App() {
         lang={lang}
       />
 
-      {/* Floating Action Button for Booking & Scroll Top */}
+      {/* Floating Action Buttons */}
       <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
         <button
           onClick={scrollToTop}
-          className="w-10 h-10 rounded-full glass-panel border border-slate-700 text-slate-300 hover:text-white flex items-center justify-center shadow-lg hover:scale-110 transition-all cursor-pointer"
+          className="w-10 h-10 rounded-full glass-panel border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-amber-500 flex items-center justify-center shadow-lg hover:scale-110 transition-all cursor-pointer"
           title="Scroll to top"
         >
           <ArrowUp className="w-5 h-5" />
