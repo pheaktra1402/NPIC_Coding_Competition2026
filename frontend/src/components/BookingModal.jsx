@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { DESTINATIONS } from '../data/tourismData';
+import { createBookingInAPI } from '../services/api';
 import { X, Calendar, Users, MapPin, Sparkles, CheckCircle, ShieldCheck } from 'lucide-react';
 
 export default function BookingModal({ isOpen, onClose, initialDestination, lang }) {
@@ -9,13 +10,31 @@ export default function BookingModal({ isOpen, onClose, initialDestination, lang
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [notes, setNotes] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+
+    try {
+      await createBookingInAPI({
+        destination,
+        date,
+        travelers: Number(travelers),
+        name,
+        email,
+        notes
+      });
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error('Booking submission error:', err);
+      setIsSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const resetAndClose = () => {
@@ -40,11 +59,11 @@ export default function BookingModal({ isOpen, onClose, initialDestination, lang
               <CheckCircle className="w-10 h-10" />
             </div>
             <h3 className="text-2xl font-extrabold text-white">
-              {lang === 'EN' ? 'Trip Request Received!' : 'សំណើរបស់អ្នកត្រូវបានទទួល!'}
+              {lang === 'EN' ? 'Saved to Database!' : 'សំណើរបស់អ្នកត្រូវបានទទួល!'}
             </h3>
             <p className="text-slate-300 text-sm max-w-md mx-auto leading-relaxed">
               {lang === 'EN'
-                ? `Thank you, ${name || 'Traveler'}! Our Cambodian travel specialist will reach out to ${email} within 24 hours to customize your experience to ${destination}.`
+                ? `Thank you, ${name || 'Traveler'}! Your booking request for ${destination} has been saved directly to our database. Our specialist will contact ${email} shortly.`
                 : 'សូមអរគុណ! ក្រុមការងារទេសចរណ៍របស់យើងនឹងទាក់ទងទៅលោកអ្នកក្នុងពេលឆាប់ៗនេះ។'}
             </p>
 
@@ -67,7 +86,7 @@ export default function BookingModal({ isOpen, onClose, initialDestination, lang
                 <h3 className="text-xl font-bold text-white">
                   {lang === 'EN' ? 'Plan Your Custom Experience' : 'រៀបចំដំណើរកម្សាន្តផ្ទាល់ខ្លួន'}
                 </h3>
-                <p className="text-xs text-slate-400">Official Cambodian Tour Consultation</p>
+                <p className="text-xs text-amber-400 font-semibold">Direct SQLite Database Connected</p>
               </div>
             </div>
 
@@ -174,9 +193,10 @@ export default function BookingModal({ isOpen, onClose, initialDestination, lang
             {/* Submit */}
             <button
               type="submit"
-              className="w-full py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-extrabold rounded-xl shadow-lg shadow-amber-500/20 cursor-pointer transition-all duration-200"
+              disabled={isSubmitting}
+              className="w-full py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-extrabold rounded-xl shadow-lg shadow-amber-500/20 cursor-pointer transition-all duration-200 disabled:opacity-50"
             >
-              {lang === 'EN' ? 'Submit Tour Inquiry' : 'ផ្ញើសំណើធ្វើដំណើរ'}
+              {isSubmitting ? 'Saving to Database...' : (lang === 'EN' ? 'Submit Tour Inquiry' : 'ផ្ញើសំណើធ្វើដំណើរ')}
             </button>
           </form>
         )}

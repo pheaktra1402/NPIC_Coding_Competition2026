@@ -1,0 +1,26 @@
+# Node & Dependencies
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# Production Build
+frontend/dist/
+frontend/dist-ssr/
+
+# Environment & Secret files
+.env
+.env.local
+*.env
+
+# SQLite Database
+backend/database.sqlite
+*.sqlite
+*.sqlite-journal
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
