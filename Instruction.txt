@@ -1,0 +1,93 @@
+========================================================================
+             TOURISM IN CAMBODIA - SETUP & RUN INSTRUCTIONS
+========================================================================
+
+Welcome to the Tourism in Cambodia project!
+This application consists of a Node.js/Express backend API with SQLite database and a React (Vite) frontend application.
+
+------------------------------------------------------------------------
+1. PREREQUISITES
+------------------------------------------------------------------------
+- Node.js (v18.0.0 or higher recommended)
+- npm (Node Package Manager)
+
+To verify installation, open a terminal and run:
+  node -v
+  npm -v
+
+------------------------------------------------------------------------
+2. PROJECT STRUCTURE
+------------------------------------------------------------------------
+- tourismInCambodia/
+  ├── backend/     -> Express REST API server & SQLite database setup
+  ├── frontend/    -> React Web UI app (Vite + Tailwind CSS)
+  └── Instruction.txt
+
+------------------------------------------------------------------------
+3. HOW TO RUN THE PROJECT
+------------------------------------------------------------------------
+
+STEP 1: Start the Backend API Server
+------------------------------------
+1. Open a terminal / command prompt.
+2. Navigate to the backend directory:
+     cd backend
+3. Install dependencies:
+     npm install
+4. Start the backend server:
+     npm run dev
+   (or 'npm start')
+
+* Note: On server launch, SQLite database (database.sqlite) is initialized
+  and seeded automatically. The backend server will run on: http://localhost:5000
+
+
+STEP 2: Start the Frontend React Application
+--------------------------------------------
+1. Open a SECOND terminal / command prompt window or tab.
+2. Navigate to the frontend directory:
+     cd frontend
+3. Install dependencies:
+     npm install
+4. Start the frontend development server:
+     npm run dev
+5. Open your browser and go to the link displayed in terminal:
+     http://localhost:5173
+
+------------------------------------------------------------------------
+4. AVAILABLE SCRIPTS SUMMARY
+------------------------------------------------------------------------
+
+Backend Commands (in /backend):
+  - npm run dev   : Run API server with hot-reload auto-restart
+  - npm start     : Run API server in standard mode
+  - npm run seed  : Re-seed the SQLite database manually
+
+Frontend Commands (in /frontend):
+  - npm run dev   : Start local development server (Vite)
+  - npm run build : Build application for production
+  - npm run preview: Preview production build locally
+
+------------------------------------------------------------------------
+5. BACKEND REST API ENDPOINTS
+------------------------------------------------------------------------
+  - Base URL        : http://localhost:5000
+  - Root Info       : GET http://localhost:5000/
+  - API Health Check: GET http://localhost:5000/api/health
+  - Destinations    : GET http://localhost:5000/api/destinations
+  - Temples         : GET http://localhost:5000/api/temples
+  - Cuisine         : GET http://localhost:5000/api/cuisine
+  - Bookings        : GET & POST http://localhost:5000/api/bookings
+  - Newsletter      : POST http://localhost:5000/api/newsletter
+
+------------------------------------------------------------------------
+6. TROUBLESHOOTING
+------------------------------------------------------------------------
+- Port Conflict (5000 or 5173):
+  If port 5000 or 5173 is already in use, close the process using that port
+  or modify the PORT configuration in backend/server.js.
+- Database Reset:
+  To reset or re-populate initial test data, run 'npm run seed' inside
+  the backend directory.
+
+========================================================================
