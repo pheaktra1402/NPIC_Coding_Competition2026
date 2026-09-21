@@ -5,6 +5,8 @@ import { Calendar, Clock, Sparkles, CheckCircle2 } from 'lucide-react';
 export default function ItineraryPlanner({ onOpenBooking, lang }) {
   const [selectedItineraryId, setSelectedItineraryId] = useState('3-day-angkor');
   const [activeDayNumber, setActiveDayNumber] = useState(1);
+  const [tripDays, setTripDays] = useState('3');
+  const [tripStyle, setTripStyle] = useState('history');
 
   const activeItinerary = ITINERARIES.find((i) => i.id === selectedItineraryId) || ITINERARIES[0];
 
@@ -31,6 +33,49 @@ export default function ItineraryPlanner({ onOpenBooking, lang }) {
               ? 'Hand-crafted day-by-day routes designed by local travel experts for the perfect Cambodian experience.'
               : 'កម្មវិធីដើរកម្សាន្តតាមថ្ងៃដែលរៀបចំដោយអ្នកជំនាញទេសចរណ៍។'}
           </p>
+        </div>
+
+        <div className="glass-card max-w-3xl mx-auto mb-10 p-5 rounded-2xl border border-amber-500/30 flex flex-col sm:flex-row gap-3 items-stretch sm:items-end">
+          <label className="flex-1 text-xs font-bold text-slate-600 dark:text-slate-300">
+            {lang === 'EN' ? 'How many days?' : 'ប៉ុន្មានថ្ងៃ?'}
+            <select
+              value={tripDays}
+              onChange={(e) => setTripDays(e.target.value)}
+              className="mt-1.5 w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-sm font-semibold"
+            >
+              <option value="3">3 {lang === 'EN' ? 'days' : 'ថ្ងៃ'}</option>
+              <option value="5">5 {lang === 'EN' ? 'days' : 'ថ្ងៃ'}</option>
+              <option value="7">7 {lang === 'EN' ? 'days' : 'ថ្ងៃ'}</option>
+            </select>
+          </label>
+          <label className="flex-1 text-xs font-bold text-slate-600 dark:text-slate-300">
+            {lang === 'EN' ? 'Trip vibe' : 'រចនាប័ទ្ម'}
+            <select
+              value={tripStyle}
+              onChange={(e) => setTripStyle(e.target.value)}
+              className="mt-1.5 w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-sm font-semibold"
+            >
+              <option value="history">{lang === 'EN' ? 'Temples & history' : 'ប្រាសាទ និងប្រវត្តិ'}</option>
+              <option value="beach">{lang === 'EN' ? 'Beach & nature' : 'ឆ្នេរ និងធម្មជាតិ'}</option>
+              <option value="mix">{lang === 'EN' ? 'A bit of everything' : 'ចម្រុះ'}</option>
+            </select>
+          </label>
+          <button
+            type="button"
+            onClick={() => {
+              const match =
+                tripStyle === 'beach'
+                  ? '5-day-coastal-escape'
+                  : tripDays === '7' || tripStyle === 'mix'
+                    ? '7-day-cambodia-grand'
+                    : '3-day-angkor';
+              setSelectedItineraryId(match);
+              setActiveDayNumber(1);
+            }}
+            className="px-5 py-2.5 rounded-xl bg-amber-500 text-slate-950 text-xs font-extrabold"
+          >
+            {lang === 'EN' ? 'Match me a route' : 'រកកម្មវិធីសម'}
+          </button>
         </div>
 
         {/* Itinerary Selector Cards */}

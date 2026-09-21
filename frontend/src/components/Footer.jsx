@@ -87,7 +87,9 @@ export default function Footer({ onOpenBooking, lang }) {
               </div>
               <div className="p-3 rounded-xl glass-card border border-slate-800 space-y-1">
                 <div className="text-amber-400 font-bold">Official e-Visa Portal</div>
-                <div className="text-slate-300">evisa.gov.kh</div>
+                <a href="https://www.evisa.gov.kh" target="_blank" rel="noreferrer" className="text-slate-300 hover:text-amber-400">
+                  evisa.gov.kh
+                </a>
               </div>
             </div>
           </div>

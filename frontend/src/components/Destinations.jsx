@@ -1,14 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DESTINATIONS } from '../data/tourismData';
-import { MapPin, Star, Calendar, ArrowUpRight, X, CheckCircle, Info, Sparkles } from 'lucide-react';
+import { MapPin, Star, Calendar, ArrowUpRight, X, CheckCircle, Info, Sparkles, Heart } from 'lucide-react';
+import { useTrip } from '../context/TripContext';
 
-export default function Destinations({ searchQuery, selectedCategory, onOpenBooking, lang }) {
+export default function Destinations({ searchQuery, selectedCategory, onOpenBooking, lang, onClearSearch }) {
   const [activeTab, setActiveTab] = useState(selectedCategory || 'All');
   const [activeDestination, setActiveDestination] = useState(null);
+  const [sortBy, setSortBy] = useState('rating');
+  const { toggleSave, isSaved } = useTrip();
 
   const categories = ['All', 'Temples', 'Beaches', 'Culture', 'Food', 'Nature'];
 
-  // Filter destinations based on category and search query
+  useEffect(() => {
+    if (selectedCategory) setActiveTab(selectedCategory);
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    if (!activeDestination) return undefined;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setActiveDestination(null);
+    };
+    window.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [activeDestination]);
+
   const filteredDestinations = DESTINATIONS.filter((item) => {
     const matchesCategory = activeTab === 'All' || item.category === activeTab;
     const matchesSearch =
@@ -17,7 +36,18 @@ export default function Destinations({ searchQuery, selectedCategory, onOpenBook
       item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.khmerName.includes(searchQuery);
     return matchesCategory && matchesSearch;
-  });
+  }).sort((a, b) => (sortBy === 'rating' ? b.rating - a.rating : a.name.localeCompare(b.name)));
+
+  const saveItem = (item) => {
+    toggleSave({
+      id: `dest-${item.id}`,
+      name: item.name,
+      kind: lang === 'EN' ? 'Destination' : 'តំបន់',
+      meta: item.region,
+      image: item.heroImage,
+      lang
+    });
+  };
 
   return (
     <section id="destinations" className="py-24 relative transition-colors duration-300">
@@ -44,21 +74,44 @@ export default function Destinations({ searchQuery, selectedCategory, onOpenBook
           </p>
         </div>
 
-        {/* Filter Category Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-12">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveTab(cat)}
-              className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer ${
-                activeTab === cat
-                  ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-lg shadow-amber-500/25 scale-105'
-                  : 'glass-card text-slate-700 dark:text-slate-300 hover:text-amber-500 border border-slate-200 dark:border-slate-800'
-              }`}
-            >
-              {cat === 'All' ? (lang === 'EN' ? 'All Destinations' : 'ទាំងអស់') : cat}
-            </button>
-          ))}
+        <div className="flex flex-col items-center gap-4 mb-10">
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveTab(cat)}
+                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer ${
+                  activeTab === cat
+                    ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-lg shadow-amber-500/25 scale-105'
+                    : 'glass-card text-slate-700 dark:text-slate-300 hover:text-amber-500 border border-slate-200 dark:border-slate-800'
+                }`}
+              >
+                {cat === 'All' ? (lang === 'EN' ? 'All Destinations' : 'ទាំងអស់') : cat}
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-3 text-xs">
+            <label className="text-slate-500 font-semibold">
+              {lang === 'EN' ? 'Sort' : 'តម្រៀប'}
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="ml-2 px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-bold text-slate-800 dark:text-slate-200"
+              >
+                <option value="rating">{lang === 'EN' ? 'Top rated' : 'ពិន្ទុខ្ពស់'}</option>
+                <option value="name">{lang === 'EN' ? 'A–Z' : 'ឈ្មោះ'}</option>
+              </select>
+            </label>
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={onClearSearch}
+                className="px-3 py-1.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 font-bold"
+              >
+                {lang === 'EN' ? `Clear “${searchQuery}”` : 'សម្អាតការស្វែងរក'}
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Destination Cards Grid */}
@@ -77,12 +130,19 @@ export default function Destinations({ searchQuery, selectedCategory, onOpenBook
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
 
-                {/* Rating Badge */}
                 <div className="absolute top-4 left-4 glass-panel px-3 py-1 rounded-full flex items-center gap-1.5 border border-amber-400/40 shadow-md">
                   <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
                   <span className="text-xs font-extrabold text-amber-300">{item.rating}</span>
                   <span className="text-[10px] text-slate-300">({item.reviewsCount.toLocaleString()})</span>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => saveItem(item)}
+                  className="absolute top-4 right-14 w-9 h-9 rounded-full glass-panel border border-amber-400/40 flex items-center justify-center"
+                  aria-label={isSaved(`dest-${item.id}`) ? 'Remove from trip' : 'Save to trip'}
+                >
+                  <Heart className={`w-4 h-4 ${isSaved(`dest-${item.id}`) ? 'fill-amber-400 text-amber-400' : 'text-amber-200'}`} />
+                </button>
 
                 {/* Region Tag */}
                 <div className="absolute top-4 right-4 bg-slate-900/80 px-3 py-1 rounded-full text-xs font-bold text-slate-200 border border-slate-700">
@@ -154,17 +214,27 @@ export default function Destinations({ searchQuery, selectedCategory, onOpenBook
             <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
               {lang === 'EN' ? 'No destinations match your filter' : 'មិនមានលទ្ធផលស្វែងរក'}
             </h3>
-            <p className="text-slate-500 dark:text-slate-400 text-sm">
-              {lang === 'EN' ? 'Try searching for another province or selecting "All Categories".' : 'សូមព្យាយាមស្វែងរកពាក្យផ្សេងទៀត។'}
+            <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">
+              {lang === 'EN' ? 'Try another keyword or show every destination.' : 'សូមព្យាយាមស្វែងរកពាក្យផ្សេងទៀត។'}
             </p>
+            <button
+              type="button"
+              onClick={() => {
+                setActiveTab('All');
+                onClearSearch?.();
+              }}
+              className="px-4 py-2 rounded-xl bg-amber-500 text-slate-950 text-xs font-extrabold"
+            >
+              {lang === 'EN' ? 'Show all destinations' : 'បង្ហាញទាំងអស់'}
+            </button>
           </div>
         )}
       </div>
 
       {/* Destination Detail Modal */}
       {activeDestination && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
-          <div className="glass-panel w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/40 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in" onClick={() => setActiveDestination(null)}>
+          <div className="glass-panel w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/40 shadow-2xl relative" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => setActiveDestination(null)}
               className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-slate-950/70 hover:bg-slate-900 text-slate-300 hover:text-white flex items-center justify-center border border-slate-700 cursor-pointer"
@@ -234,6 +304,16 @@ export default function Destinations({ searchQuery, selectedCategory, onOpenBook
               </div>
 
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-end gap-3 border-t border-slate-200 dark:border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => saveItem(activeDestination)}
+                  className="w-full sm:w-auto px-6 py-2.5 glass-card border border-amber-500/30 text-amber-600 dark:text-amber-400 font-semibold rounded-xl text-xs flex items-center justify-center gap-2"
+                >
+                  <Heart className={`w-4 h-4 ${isSaved(`dest-${activeDestination.id}`) ? 'fill-amber-400' : ''}`} />
+                  {isSaved(`dest-${activeDestination.id}`)
+                    ? (lang === 'EN' ? 'Saved' : 'បានរក្សាទុក')
+                    : (lang === 'EN' ? 'Save to trip' : 'រក្សាទុក')}
+                </button>
                 <button
                   onClick={() => setActiveDestination(null)}
                   className="w-full sm:w-auto px-6 py-2.5 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-300 font-semibold rounded-xl text-xs"

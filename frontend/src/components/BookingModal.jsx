@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { DESTINATIONS } from '../data/tourismData';
+import React, { useEffect, useState } from 'react';
+import { DESTINATIONS, ITINERARIES } from '../data/tourismData';
 import { createBookingInAPI } from '../services/api';
 import { X, MapPin, Sparkles, CheckCircle } from 'lucide-react';
 
-export default function BookingModal({ isOpen, onClose, initialDestination, lang }) {
+export default function BookingModal({ isOpen, onClose, initialDestination, lang, notesPrefill = '' }) {
   const [destination, setDestination] = useState(initialDestination || 'Siem Reap & Angkor');
   const [date, setDate] = useState('');
   const [travelers, setTravelers] = useState(2);
@@ -12,6 +12,28 @@ export default function BookingModal({ isOpen, onClose, initialDestination, lang
   const [notes, setNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const today = new Date().toISOString().split('T')[0];
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setDestination(initialDestination || 'Siem Reap & Angkor');
+    if (notesPrefill) setNotes(notesPrefill);
+    setIsSubmitted(false);
+  }, [isOpen, initialDestination, notesPrefill]);
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const onKey = (e) => {
+      if (e.key === 'Escape') resetAndClose();
+    };
+    window.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -43,8 +65,8 @@ export default function BookingModal({ isOpen, onClose, initialDestination, lang
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
-      <div className="glass-panel w-full max-w-xl rounded-3xl border border-amber-500/40 shadow-2xl p-6 sm:p-8 relative bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in" onClick={resetAndClose}>
+      <div className="glass-panel w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/40 shadow-2xl p-6 sm:p-8 relative bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100" onClick={(e) => e.stopPropagation()}>
         <button
           onClick={resetAndClose}
           className="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center border border-slate-300 dark:border-slate-700 cursor-pointer"
@@ -58,7 +80,7 @@ export default function BookingModal({ isOpen, onClose, initialDestination, lang
               <CheckCircle className="w-10 h-10" />
             </div>
             <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white">
-              {lang === 'EN' ? 'Saved to Database!' : 'សំណើរបស់អ្នកត្រូវបានទទួល!'}
+              {lang === 'EN' ? 'Request received' : 'សំណើរបស់អ្នកត្រូវបានទទួល!'}
             </h3>
             <p className="text-slate-600 dark:text-slate-300 text-sm max-w-md mx-auto leading-relaxed">
               {lang === 'EN'
@@ -85,7 +107,9 @@ export default function BookingModal({ isOpen, onClose, initialDestination, lang
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white">
                   {lang === 'EN' ? 'Plan Your Custom Experience' : 'រៀបចំដំណើរកម្សាន្តផ្ទាល់ខ្លួន'}
                 </h3>
-                <p className="text-xs text-amber-600 dark:text-amber-400 font-semibold">Direct SQLite Database Connected</p>
+                <p className="text-xs text-amber-600 dark:text-amber-400 font-semibold">
+                  {lang === 'EN' ? 'A specialist replies within one business day' : 'អ្នកជំនាញនឹងឆ្លើយតបក្នុងមួយថ្ងៃធ្វើការ'}
+                </p>
               </div>
             </div>
 
@@ -107,6 +131,16 @@ export default function BookingModal({ isOpen, onClose, initialDestination, lang
                       {d.name} ({d.khmerName})
                     </option>
                   ))}
+                  {ITINERARIES.map((item) => (
+                    <option key={item.id} value={item.title}>
+                      {item.title}
+                    </option>
+                  ))}
+                  {destination &&
+                    !DESTINATIONS.some((d) => d.name === destination) &&
+                    !ITINERARIES.some((i) => i.title === destination) && (
+                      <option value={destination}>{destination}</option>
+                    )}
                   <option value="Custom 7-Day Grand Tour">Custom 7-Day Grand Cambodia Tour</option>
                   <option value="Custom Coastal & Island Trip">Custom Coastal & Island Trip</option>
                 </select>
@@ -121,6 +155,7 @@ export default function BookingModal({ isOpen, onClose, initialDestination, lang
                 </label>
                 <input
                   type="date"
+                  min={today}
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                   className="w-full px-3.5 py-2.5 bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white text-sm font-semibold focus:outline-none focus:border-amber-400"
@@ -195,7 +230,9 @@ export default function BookingModal({ isOpen, onClose, initialDestination, lang
               disabled={isSubmitting}
               className="w-full py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-extrabold rounded-xl shadow-lg shadow-amber-500/20 cursor-pointer transition-all duration-200 disabled:opacity-50 text-xs"
             >
-              {isSubmitting ? 'Saving to Database...' : (lang === 'EN' ? 'Submit Tour Inquiry' : 'ផ្ញើសំណើធ្វើដំណើរ')}
+                  {isSubmitting
+                    ? (lang === 'EN' ? 'Sending...' : 'កំពុងផ្ញើ...')
+                    : (lang === 'EN' ? 'Submit tour inquiry' : 'ផ្ញើសំណើធ្វើដំណើរ')}
             </button>
           </form>
         )}

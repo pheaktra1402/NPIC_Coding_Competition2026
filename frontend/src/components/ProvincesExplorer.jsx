@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PROVINCES_DATA } from '../data/provincesData';
-import { Map, MapPin, Search, Sparkles, CheckCircle2, ArrowUpRight, X, Compass } from 'lucide-react';
+import { Map, Search, Sparkles, CheckCircle2, ArrowUpRight, X, Compass, Heart } from 'lucide-react';
+import { useTrip } from '../context/TripContext';
 
 export default function ProvincesExplorer({ onOpenBooking, lang }) {
   const [selectedRegion, setSelectedRegion] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeProvince, setActiveProvince] = useState(null);
+  const { toggleSave, isSaved } = useTrip();
 
   const regions = [
     { key: 'All', nameEn: 'All 25 Provinces', nameKm: 'ទាំង ២៥ រាជធានី-ខេត្ត' },
@@ -105,6 +107,23 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
                 <span className="absolute top-3 left-3 bg-slate-900/80 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-amber-400 border border-slate-700">
                   {prov.region}
                 </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    toggleSave({
+                      id: `prov-${prov.id}`,
+                      name: prov.name,
+                      kind: lang === 'EN' ? 'Province' : 'ខេត្ត',
+                      meta: prov.region,
+                      image: prov.image,
+                      lang
+                    })
+                  }
+                  className="absolute top-3 right-3 w-8 h-8 rounded-full bg-slate-900/80 border border-amber-400/40 flex items-center justify-center"
+                  aria-label="Save province"
+                >
+                  <Heart className={`w-3.5 h-3.5 ${isSaved(`prov-${prov.id}`) ? 'fill-amber-400 text-amber-400' : 'text-amber-200'}`} />
+                </button>
 
                 <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
                   <div>
@@ -152,8 +171,8 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
 
         {/* Modal Detail for Active Province */}
         {activeProvince && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
-            <div className="glass-panel w-full max-w-2xl rounded-3xl border border-amber-500/30 shadow-2xl p-6 sm:p-8 relative">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in" onClick={() => setActiveProvince(null)}>
+            <div className="glass-panel w-full max-w-2xl rounded-3xl border border-amber-500/30 shadow-2xl p-6 sm:p-8 relative" onClick={(e) => e.stopPropagation()}>
               <button
                 onClick={() => setActiveProvince(null)}
                 className="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-900 text-slate-300 hover:text-white flex items-center justify-center border border-slate-700 cursor-pointer"

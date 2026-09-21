@@ -4,7 +4,23 @@ import { FileText, DollarSign, Sun, Bus, ShieldCheck, RefreshCw, CheckCircle } f
 
 export default function TravelGuide({ lang }) {
   const [usdAmount, setUsdAmount] = useState(10);
+  const [openFaq, setOpenFaq] = useState(0);
   const rielRate = 4100;
+
+  const faqs =
+    lang === 'EN'
+      ? [
+          { q: 'Do I need a visa?', a: 'Most visitors use the official e-Visa ($30, 30 days) at evisa.gov.kh, or visa on arrival at PNH and SAI airports.' },
+          { q: 'Is US dollars accepted?', a: 'Yes. USD and riel are used together. Change under $1 is usually given in riel. ABA / Bakong QR is common in towns.' },
+          { q: 'When is the best time to visit?', a: 'November–February is cool and dry — ideal for temples. March–May is hotter and great for islands. June–October is lush with fewer crowds.' },
+          { q: 'What should I wear at temples?', a: 'Cover shoulders and knees. A light scarf helps at Angkor. Remove hats in wats. Sunrise visits are cooler and less crowded.' },
+        ]
+      : [
+          { q: 'តើខ្ញុំត្រូវការទិដ្ឋាការទេ?', a: 'ភ្ញៀវភាគច្រើនអាចដាក់ពាក្យ e-Visa $30 តាម evisa.gov.kh ឬទិញនៅពេលមកដល់ព្រលានយន្តហោះ។' },
+          { q: 'តើដុល្លារអាមេរិកប្រើបានទេ?', a: 'បាន។ ដុល្លារ និងរៀលប្រើជាមួយគ្នា។ ការផ្លាស់ប្តូរក្រោម $1 ជាធម្មតាជារៀល។' },
+          { q: 'ពេលណាល្អបំផុតសម្រាប់ធ្វើដំណើរ?', a: 'វិច្ឆិកា–កុម្ភៈ ត្រជាក់ និងស្ងួត។ មីនា–ឧសភា ក្តៅ ល្អសម្រាប់កោះ។ មិថុនា–តុលា ពណ៌បៃតង មនុស្សតិច។' },
+          { q: 'សម្លៀកបំពាក់នៅប្រាសាទ?', a: 'គួរគ្របស្មា និងជង្គង់។ ព្រឹកព្រលឹមត្រជាក់ និងមនុស្សតិចជាង។' },
+        ];
 
   return (
     <section id="travel-guide" className="py-24 relative bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">
@@ -133,6 +149,28 @@ export default function TravelGuide({ lang }) {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="mt-12 max-w-3xl mx-auto space-y-3">
+          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 text-center">
+            {lang === 'EN' ? 'Quick answers' : 'សំណួរញឹកញាប់'}
+          </h3>
+          {faqs.map((faq, idx) => (
+            <button
+              key={faq.q}
+              type="button"
+              onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+              className="w-full text-left glass-card p-4 rounded-2xl border border-slate-200 dark:border-slate-800"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <span className="font-bold text-sm text-slate-900 dark:text-white">{faq.q}</span>
+                <span className="text-amber-500 font-extrabold">{openFaq === idx ? '−' : '+'}</span>
+              </div>
+              {openFaq === idx && (
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{faq.a}</p>
+              )}
+            </button>
+          ))}
         </div>
       </div>
     </section>
