@@ -315,7 +315,9 @@ export default function ProvincesExplorer({ onOpenBooking, onOpenMap, lang }) {
                     <button
                       key={idx}
                       type="button"
-                      onClick={() => onOpenMap?.(spot, activeProvince.khmerName)}
+                      onClick={() =>
+                        onOpenMap?.(spot, activeProvince.khmerName)
+                      }
                       className="p-2.5 bg-slate-900/80 hover:bg-amber-500/20 rounded-xl text-xs text-slate-200 border border-slate-800 flex items-center justify-between gap-2 transition-all cursor-pointer group text-left"
                     >
                       <div className="flex items-center gap-2 truncate">
@@ -348,7 +350,11 @@ export default function ProvincesExplorer({ onOpenBooking, onOpenMap, lang }) {
                   className="w-full sm:w-auto px-5 py-2.5 bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-slate-950 text-xs font-bold rounded-xl border border-amber-500/40 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <MapPin className="w-4 h-4" />
-                  <span>{lang === "KM" ? "មើល Google Maps ពេញអេក្រង់" : "View Full Map"}</span>
+                  <span>
+                    {lang === "KM"
+                      ? "មើល Google Maps ពេញអេក្រង់"
+                      : "View Full Map"}
+                  </span>
                 </button>
 
                 <button
