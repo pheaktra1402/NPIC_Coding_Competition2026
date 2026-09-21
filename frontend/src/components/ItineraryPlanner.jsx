@@ -1,0 +1,143 @@
+import React, { useState } from 'react';
+import { ITINERARIES } from '../data/tourismData';
+import { Calendar, Clock, DollarSign, MapPin, Sparkles, CheckCircle2, ChevronRight } from 'lucide-react';
+
+export default function ItineraryPlanner({ onOpenBooking, lang }) {
+  const [selectedItineraryId, setSelectedItineraryId] = useState('3-day-angkor');
+  const [activeDayNumber, setActiveDayNumber] = useState(1);
+
+  const activeItinerary = ITINERARIES.find((i) => i.id === selectedItineraryId) || ITINERARIES[0];
+
+  return (
+    <section id="itineraries" className="py-24 relative bg-slate-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
+            <Calendar className="w-3.5 h-3.5" />
+            <span>{lang === 'EN' ? 'TRIP PLANNING TOOLS' : 'កម្មវិធីដំណើរកម្សាន្ត'}</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+            {lang === 'EN' ? (
+              <>
+                Curated <span className="gold-gradient-text">Travel Itineraries</span>
+              </>
+            ) : (
+              <span className="khmer-font text-amber-300">រៀបចំគម្រោងដំណើរកម្សាន្ត</span>
+            )}
+          </h2>
+          <p className="text-slate-400 text-base sm:text-lg">
+            {lang === 'EN'
+              ? 'Hand-crafted day-by-day routes designed by local travel experts for the perfect Cambodian experience.'
+              : 'កម្មវិធីដើរកម្សាន្តតាមថ្ងៃដែលរៀបចំដោយអ្នកជំនាញទេសចរណ៍។'}
+          </p>
+        </div>
+
+        {/* Itinerary Selector Tabs */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+          {ITINERARIES.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => {
+                setSelectedItineraryId(item.id);
+                setActiveDayNumber(1);
+              }}
+              className={`p-6 rounded-2xl text-left transition-all duration-300 cursor-pointer flex flex-col justify-between ${
+                selectedItineraryId === item.id
+                  ? 'glass-panel border-amber-400 bg-amber-500/10 shadow-xl shadow-amber-500/10 ring-1 ring-amber-400'
+                  : 'glass-card hover:border-amber-500/30 border-slate-800'
+              }`}
+            >
+              <div>
+                <div className="flex items-center justify-between text-xs font-bold text-amber-400 mb-2">
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5" />
+                    {item.duration}
+                  </span>
+                  <span className="bg-slate-800 px-2 py-0.5 rounded text-[11px] text-slate-300">
+                    {item.style}
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+              </div>
+
+              <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+                <span>Estimated Budget:</span>
+                <span className="font-semibold text-amber-300">{item.budget}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {/* Active Itinerary Day Timeline & Details */}
+        <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-amber-500/30 shadow-2xl space-y-8">
+          {/* Header Info */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+            <div>
+              <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">
+                <Sparkles className="w-4 h-4" />
+                <span>{activeItinerary.duration} • {activeItinerary.style}</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-bold text-white">{activeItinerary.title}</h3>
+            </div>
+
+            <button
+              onClick={() => onOpenBooking(activeItinerary.title)}
+              className="px-6 py-3 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-bold rounded-xl shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 cursor-pointer hover:scale-105 transition-transform"
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>{lang === 'EN' ? 'Book This Custom Itinerary' : 'កក់កម្មវិធីនេះ'}</span>
+            </button>
+          </div>
+
+          {/* Day Navigation Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-2">
+            {activeItinerary.days.map((d) => (
+              <button
+                key={d.day}
+                onClick={() => setActiveDayNumber(d.day)}
+                className={`px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all cursor-pointer ${
+                  activeDayNumber === d.day
+                    ? 'bg-amber-400 text-slate-950 shadow-md'
+                    : 'bg-slate-900 text-slate-300 hover:text-white border border-slate-800'
+                }`}
+              >
+                Day {d.day}
+              </button>
+            ))}
+          </div>
+
+          {/* Active Day Content */}
+          {activeItinerary.days.map((dayData) => {
+            if (dayData.day !== activeDayNumber) return null;
+            return (
+              <div key={dayData.day} className="space-y-6 animate-fade-in">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 font-bold flex items-center justify-center text-lg">
+                    {dayData.day}
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold text-white">{dayData.title}</h4>
+                    <p className="text-xs text-slate-400">Scheduled Daily Experience</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {dayData.activities.map((act, idx) => (
+                    <div
+                      key={idx}
+                      className="glass-card p-4 rounded-xl border border-slate-800 flex items-start gap-3"
+                    >
+                      <CheckCircle2 className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-200 text-sm leading-relaxed">{act}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
