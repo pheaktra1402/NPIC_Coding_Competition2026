@@ -1,4 +1,4 @@
-import { LOCAL_PROVINCE_IMAGES, LOCAL_TRAVEL_IMAGES, getOfflineIllustration } from './localImages';
+import { LOCAL_PROVINCE_IMAGES, LOCAL_TRAVEL_IMAGES, LOCAL_CUISINE_IMAGES, LOCAL_ARTS_FESTIVAL_IMAGES, LOCAL_TEMPLE_IMAGES, getOfflineIllustration } from './localImages';
 
 export const DESTINATIONS = [
   {
@@ -186,7 +186,7 @@ export const TEMPLES = [
     descriptionKm: 'កសាងឡើងជាប្រាសាទព្រហ្មញ្ញសាសនាឧទ្ទិសជូនព្រះវិស្ណុ និងបានក្លាយជាប្រាសាទព្រះពុទ្ធសាសនា។ អង្គរវត្តតំណាងឱ្យភ្នំព្រះសុមេរុ មានកំពូលផ្កាឈូក និងចម្លាក់ថ្វាយព្រះ។',
     descriptionZh: '作为献给毗湿奴的印度教神庙而建，后逐渐演变为佛教神庙。吴哥窟代表须弥山在人间之化身。以对称的莲花蕾宝塔、精美的壁画浮雕和日出倒影池闻名于世。',
     descriptionFr: 'Construit comme un temple hindou dédié à Vishnou, Angkor Wat représente le mont Meru sur Terre. Célèbre pour ses tours en bouton de lotus et son lever de soleil.',
-    image: LOCAL_TRAVEL_IMAGES['angkor-wat'] || LOCAL_PROVINCE_IMAGES['siem-reap'],
+    image: LOCAL_TEMPLE_IMAGES['angkor-wat'] || LOCAL_TRAVEL_IMAGES['angkor-wat'] || LOCAL_PROVINCE_IMAGES['siem-reap'],
     hotspots: [
       { title: 'Central Sanctuary Towers', desc: 'Representing the 5 peaks of Mount Meru, rising 65 meters above ground level.' },
       { title: 'Bas-Relief Gallery of Churning the Ocean of Milk', desc: 'Famous 49-meter carved wall showing 88 devas and 92 asuras wrestling the cosmic serpent.' },
@@ -206,7 +206,7 @@ export const TEMPLES = [
     descriptionKm: 'ស្ថិតនៅចំកណ្តាលរាជធានីអង្គរធំ ប្រាសាទបាយ័នមានប្រាសាទកំពូល ៥៤ ដែលមានចម្លាក់ព្រហ្មមុខ ៤ ញញឹមយ៉ាងប្រៀបប្រដៅ។',
     descriptionZh: '位于古城大吴哥城的核心正中，巴戎寺因其54座哥特式宝塔上雕刻的宁静微笑四面石佛雕像而独树一帜，墙壁展示了12世纪高棉海军交战与平民生活。',
     descriptionFr: 'Situé au cœur de la ville fortifiée d\'Angkor Thom, le Bayon se distingue par ses 54 tours sculptées de visage souriants.',
-    image: LOCAL_TRAVEL_IMAGES['bayon-ta-prohm'] || LOCAL_PROVINCE_IMAGES['banteay-meanchey'],
+    image: LOCAL_TEMPLE_IMAGES['bayon'] || LOCAL_TRAVEL_IMAGES['bayon-ta-prohm'] || LOCAL_PROVINCE_IMAGES['banteay-meanchey'],
     hotspots: [
       { title: 'Smiling Towers', desc: 'Carved giant stone faces said to represent King Jayavarman VII and Avalokiteshvara.' },
       { title: 'Outer Wall Bas-Reliefs', desc: 'Carvings portraying naval battles with the Chams, market vendors, and cockfights.' }
@@ -225,7 +225,7 @@ export const TEMPLES = [
     descriptionKm: 'រក្សាទុកក្នុងស្ថានភាពដើម ប្រាសាទតាព្រហ្មល្បីល្បាញខាងឫសឈើធំៗ (ដើមស្ពង់) ដុះព័ទ្ធលើជញ្ជាំងថ្មបុរាណ។',
     descriptionZh: '很大程度上保留了发现时的原始状态，塔普伦寺因巨型木棉树根缠绕交错于千年古石廊之上而闻名。作为国王为其母亲修建的修道院，给人无限古老文明的震撼。',
     descriptionFr: 'Laissé dans son état de découverte, Ta Prohm est célèbre pour ses racines colossales d\'arbres enveloppant les ruines.',
-    image: LOCAL_TRAVEL_IMAGES['bayon-ta-prohm'] || LOCAL_PROVINCE_IMAGES['kampot'],
+    image: LOCAL_TEMPLE_IMAGES['ta-prohm'] || LOCAL_TRAVEL_IMAGES['bayon-ta-prohm'] || LOCAL_PROVINCE_IMAGES['kampot'],
     hotspots: [
       { title: 'Crocodile Tree Root Wall', desc: 'Massive root structure strangling ancient sandstone archway.' },
       { title: 'Crocodile Root Courtyard', desc: 'The iconic Hollywood film setting for Tomb Raider.' }
@@ -244,7 +244,7 @@ export const TEMPLES = [
     descriptionKm: 'ស្គាល់ថាជា «កែវមុជសិល្បៈខ្មែរ» កសាងពីថ្មភក់ពណ៌ផ្កាឈូក មានចម្លាក់យ៉ាងល្អិតល្អន់ និងស្រស់ស្អាតបំផុត។',
     descriptionZh: '被誉为“高棉艺术的皇冠明珠”，女王宫由粉红色砂岩打造，拥有如雕花木艺般精致立体的三维壁雕。供奉湿婆神，拥有全吴哥保护最完好的雕刻细节。',
     descriptionFr: 'Connu comme le "Joyau de l\'art khmer", Banteay Srei est construit en grès rose avec des sculptures en micro-détail.',
-    image: LOCAL_PROVINCE_IMAGES['siem-reap'],
+    image: LOCAL_TEMPLE_IMAGES['banteay-srei'] || LOCAL_PROVINCE_IMAGES['siem-reap'],
     hotspots: [
       { title: 'Pink Sandstone Devatas', desc: 'Exquisite female guardian deities carved into niches.' },
       { title: 'Lintels of Ramayana Myth', desc: 'Intricate lintels illustrating stories of Ravana and Indra.' }
@@ -260,7 +260,7 @@ export const CUISINE = [
     frName: 'Amok de Poisson (Fish Amok)',
     category: 'Mains',
     spiciness: 'Mild & Aromatic',
-    image: getOfflineIllustration('Food', 'Fish Amok'),
+    image: LOCAL_CUISINE_IMAGES['fish-amok'] || getOfflineIllustration('Food', 'Fish Amok'),
     description: 'Cambodia’s signature national dish. Fresh river fish steamed in banana leaf with rich coconut milk cream, kroeung (lemongrass, galangal, turmeric paste), kaffir lime leaves, and noni leaves.',
     ingredients: ['Snakehead Fish / Catfish', 'Fresh Coconut Cream', 'Kroeung Herb Paste', 'Slok Ngor Leaves', 'Banana Leaf Bowl']
   },
@@ -271,7 +271,7 @@ export const CUISINE = [
     frName: 'Lok Lak de Bœuf',
     category: 'Mains',
     spiciness: 'Savory & Peppery',
-    image: getOfflineIllustration('Food', 'Beef Lok Lak'),
+    image: LOCAL_CUISINE_IMAGES['beef-lok-lak'] || getOfflineIllustration('Food', 'Beef Lok Lak'),
     description: 'Stir-fried tender marinated beef cubes served over crisp lettuce, sweet tomatoes, and red onions. Accompanied by Kampot black pepper and lime dipping sauce.',
     ingredients: ['Tenderloin Beef', 'Kampot Pepper Lime Dip', 'Crisp Salad Bed', 'Fried Egg (Optional)']
   },
@@ -282,7 +282,7 @@ export const CUISINE = [
     frName: 'Num Banh Chok (Nouilles Khmères)',
     category: 'Breakfast / Noodles',
     spiciness: 'Fragrant',
-    image: getOfflineIllustration('Food', 'Num Banh Chok'),
+    image: LOCAL_CUISINE_IMAGES['num-banh-chok'] || getOfflineIllustration('Food', 'Num Banh Chok'),
     description: 'Khmer Noodles. Fresh handmade rice noodles topped with warm green fish curry gravy made from lemongrass, turmeric, and fresh river herbs, served with banana flower and cucumber slices.',
     ingredients: ['Fresh Rice Noodles', 'Lemongrass Fish Curry', 'Banana Flower', 'Long Beans', 'Fresh Mint']
   },
@@ -293,7 +293,7 @@ export const CUISINE = [
     frName: 'Crabe au Poivre de Kampot',
     category: 'Seafood',
     spiciness: 'Zesty & Fiery',
-    image: getOfflineIllustration('Food', 'Kampot Pepper Crab'),
+    image: LOCAL_CUISINE_IMAGES['kampot-pepper-crab'] || getOfflineIllustration('Food', 'Kampot Pepper Crab'),
     description: 'Fresh ocean blue swimmer crabs from Kep sauteed directly with stems of fresh green Kampot peppercorns, garlic, and sweet soy sauce.',
     ingredients: ['Fresh Kep Blue Crab', 'Fresh Green Kampot Peppercorn Clusters', 'Garlic', 'Palm Sugar']
   }
@@ -306,7 +306,7 @@ export const CULTURE_ARTS = [
     zhTitle: '阿普萨拉宫廷宫仙舞蹈',
     frTitle: 'Danse Céleste Apsara',
     type: 'Performing Arts',
-    image: getOfflineIllustration('Culture', 'Apsara Celestial Dance'),
+    image: LOCAL_ARTS_FESTIVAL_IMAGES['apsara'] || getOfflineIllustration('Culture', 'Apsara Celestial Dance'),
     summary: 'Recognized by UNESCO Intangible Cultural Heritage, Apsara is a classical dance drama created to honor royal deities. Dancers wear elaborate gold headpieces and silk sampots, performing slow, hypnotic hand gestures representing flowers and life.',
     details: 'Each hand gesture (mudra) holds distinct meaning — from a lotus bud opening to a fruit ripening on the tree. Training starts in childhood requiring extraordinary flexibility.'
   },
@@ -316,7 +316,7 @@ export const CULTURE_ARTS = [
     zhTitle: '送水节龙舟赛与祭月节',
     frTitle: 'Fête des Eaux (Bon Om Touk)',
     type: 'Annual Festival (November)',
-    image: LOCAL_PROVINCE_IMAGES['phnom-penh'] || getOfflineIllustration('Culture', 'Water Festival Dragon Boats'),
+    image: LOCAL_ARTS_FESTIVAL_IMAGES['bon-om-touk'] || LOCAL_PROVINCE_IMAGES['phnom-penh'],
     summary: 'Celebrates the reversal of the Tonle Sap river flow — a natural wonder! Millions gather along Phnom Penh’s riverbank to watch colorful dragon boat races, evening illuminated floats (Loy Pratip), and full moon moon-worshipping ceremonies.',
     details: 'Held over 3 days every November during the full moon of Kadduk month, signaling the end of the rainy season and abundant fishing.'
   },
@@ -326,7 +326,7 @@ export const CULTURE_ARTS = [
     zhTitle: '柬埔寨传统新年 (宋干节)',
     frTitle: 'Nouvel An Khmer (Chaul Chnam Thmey)',
     type: 'Annual Festival (Mid-April)',
-    image: LOCAL_TRAVEL_IMAGES['angkor-wat'] || getOfflineIllustration('Culture', 'Khmer New Year Angkor Sangkranta'),
+    image: LOCAL_ARTS_FESTIVAL_IMAGES['khmer-new-year'] || LOCAL_TRAVEL_IMAGES['angkor-wat'],
     summary: 'The biggest holiday of the year! Celebrated in mid-April over 3 days (Moha Songkran, Virak Wanabat, Virak Loeung Sak). Cambodians return to home provinces, visit pagodas, splash water, and play traditional games like Teanh Tret (Tug of War).',
     details: 'Angkor Sangkranta in Siem Reap brings thousands together for traditional dance records, folk games, and festive celebrations under ancient temple lights.'
   }

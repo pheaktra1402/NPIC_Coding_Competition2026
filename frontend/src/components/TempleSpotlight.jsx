@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { TEMPLES } from '../data/tourismData';
-import { Sparkles, Eye, Compass, CheckCircle2 } from 'lucide-react';
+import { Sparkles, Eye, Compass, CheckCircle2, MapPin } from 'lucide-react';
 import { getTranslation } from '../data/translations';
 import SafeImage from './SafeImage';
 
-export default function TempleSpotlight({ lang }) {
+export default function TempleSpotlight({ lang, onOpenMap }) {
   const [activeTempleId, setActiveTempleId] = useState('angkor-wat');
   const [activeHotspotIndex, setActiveHotspotIndex] = useState(0);
 
@@ -131,7 +131,7 @@ export default function TempleSpotlight({ lang }) {
               )}
             </div>
 
-            <div className="pt-4 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 space-y-1">
+            <div className="pt-4 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 space-y-2">
               <div className="flex items-center justify-between">
                 <span>Recommended Visit Time:</span>
                 <span className="text-slate-900 dark:text-slate-200 font-bold">5:30 AM Sunrise / 4:30 PM Sunset</span>
@@ -140,6 +140,14 @@ export default function TempleSpotlight({ lang }) {
                 <span>Dress Code:</span>
                 <span className="text-slate-900 dark:text-slate-200 font-bold">Shoulders & Knees Covered</span>
               </div>
+              <button
+                type="button"
+                onClick={() => onOpenMap?.(getTempleName(selectedTemple), selectedTemple.khmerName)}
+                className="w-full mt-2 py-2.5 bg-amber-500/15 hover:bg-amber-500 hover:text-slate-950 text-amber-600 dark:text-amber-400 text-xs font-bold rounded-xl border border-amber-500/30 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <MapPin className="w-4 h-4" />
+                <span>{lang === "KM" ? "មើល Google Maps" : "View on Google Maps"}</span>
+              </button>
             </div>
           </div>
         </div>

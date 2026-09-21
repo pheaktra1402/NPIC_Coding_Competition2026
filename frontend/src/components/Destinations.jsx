@@ -5,7 +5,7 @@ import { useTrip } from '../context/TripContext';
 import { getTranslation } from '../data/translations';
 import SafeImage from './SafeImage';
 
-export default function Destinations({ searchQuery, selectedCategory, onOpenBooking, lang, onClearSearch }) {
+export default function Destinations({ searchQuery, selectedCategory, onOpenBooking, onOpenMap, lang, onClearSearch }) {
   const [activeTab, setActiveTab] = useState(selectedCategory || 'All');
   const [activeDestination, setActiveDestination] = useState(null);
   const [sortBy, setSortBy] = useState('rating');
@@ -198,20 +198,31 @@ export default function Destinations({ searchQuery, selectedCategory, onOpenBook
                     </div>
                   </div>
 
-                  <div className="pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80">
-                    <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium">
-                      <Calendar className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
-                      <span>{item.bestTime}</span>
+                  <div className="pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 gap-2">
+                    <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium truncate">
+                      <Calendar className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 shrink-0" />
+                      <span className="truncate">{item.bestTime}</span>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => setActiveDestination(item)}
-                      className="flex items-center gap-1 px-4 py-2 bg-amber-500/10 hover:bg-amber-500 text-amber-600 dark:text-amber-400 hover:text-slate-950 text-xs font-extrabold rounded-xl transition-all cursor-pointer border border-amber-500/30"
-                    >
-                      <span>Explore</span>
-                      <ArrowUpRight className="w-4 h-4" />
-                    </button>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => onOpenMap?.(title, item.khmerName)}
+                        className="p-2 bg-amber-500/15 hover:bg-amber-500 text-amber-600 dark:text-amber-400 hover:text-slate-950 text-xs font-bold rounded-xl transition-all cursor-pointer border border-amber-500/30 flex items-center gap-1"
+                        title="View Google Map"
+                      >
+                        <MapPin className="w-3.5 h-3.5" />
+                        <span>Map</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setActiveDestination(item)}
+                        className="flex items-center gap-1 px-3 py-2 bg-amber-500/10 hover:bg-amber-500 text-amber-600 dark:text-amber-400 hover:text-slate-950 text-xs font-extrabold rounded-xl transition-all cursor-pointer border border-amber-500/30"
+                      >
+                        <span>Explore</span>
+                        <ArrowUpRight className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -287,9 +298,16 @@ export default function Destinations({ searchQuery, selectedCategory, onOpenBook
                   </h5>
                   <ul className="space-y-2">
                     {activeDestination.highlights.map((hl, idx) => (
-                      <li key={idx} className="text-sm text-slate-700 dark:text-slate-300 flex items-center gap-2 font-medium">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                        <span>{hl}</span>
+                      <li key={idx}>
+                        <button
+                          type="button"
+                          onClick={() => onOpenMap?.(hl, activeDestination.khmerName)}
+                          className="text-sm text-slate-700 dark:text-slate-300 hover:text-amber-500 dark:hover:text-amber-300 flex items-center gap-2 font-medium cursor-pointer transition-colors text-left"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
+                          <span>{hl}</span>
+                          <MapPin className="w-3.5 h-3.5 text-amber-500 shrink-0 opacity-70 hover:opacity-100" />
+                        </button>
                       </li>
                     ))}
                   </ul>
@@ -312,11 +330,29 @@ export default function Destinations({ searchQuery, selectedCategory, onOpenBook
                 </div>
               </div>
 
+              {/* Embedded Google Map Preview */}
+              <div className="rounded-2xl overflow-hidden border border-amber-500/30 h-56 relative bg-slate-950">
+                <iframe
+                  title={`Google Map - ${activeDestination.name}`}
+                  src={`https://maps.google.com/maps?q=${encodeURIComponent(`${activeDestination.name} ${activeDestination.khmerName} Cambodia`)}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
+                  className="w-full h-full border-0"
+                  loading="lazy"
+                />
+              </div>
+
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-end gap-3 border-t border-slate-200 dark:border-slate-800">
                 <button
                   type="button"
+                  onClick={() => onOpenMap?.(getDestTitle(activeDestination), activeDestination.khmerName)}
+                  className="w-full sm:w-auto px-5 py-2.5 bg-amber-500/20 text-amber-600 dark:text-amber-400 hover:bg-amber-500 hover:text-slate-950 font-bold rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer transition-colors border border-amber-500/30"
+                >
+                  <MapPin className="w-4 h-4" />
+                  <span>{lang === "KM" ? "មើល Google Maps ពេញអេក្រង់" : "View Full Map"}</span>
+                </button>
+                <button
+                  type="button"
                   onClick={() => saveItem(activeDestination)}
-                  className="w-full sm:w-auto px-6 py-2.5 glass-card border border-amber-500/30 text-amber-600 dark:text-amber-400 font-semibold rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto px-5 py-2.5 glass-card border border-amber-500/30 text-amber-600 dark:text-amber-400 font-semibold rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Heart className={`w-4 h-4 ${isSaved(`dest-${activeDestination.id}`) ? 'fill-amber-400' : ''}`} />
                   {isSaved(`dest-${activeDestination.id}`) ? 'Saved' : 'Save'}
@@ -324,7 +360,7 @@ export default function Destinations({ searchQuery, selectedCategory, onOpenBook
                 <button
                   type="button"
                   onClick={() => setActiveDestination(null)}
-                  className="w-full sm:w-auto px-6 py-2.5 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-300 font-semibold rounded-xl text-xs cursor-pointer"
+                  className="w-full sm:w-auto px-5 py-2.5 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-300 font-semibold rounded-xl text-xs cursor-pointer"
                 >
                   Close
                 </button>

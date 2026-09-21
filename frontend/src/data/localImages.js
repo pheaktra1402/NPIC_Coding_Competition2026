@@ -29,6 +29,20 @@ import bayonTaProhmTravelImg from '../assets/travel/BayonTaProhm,.jpg';
 import kohRongTravelImg from '../assets/travel/KohRongKohRongSanloem.jpg';
 import mondulkiriTravelImg from '../assets/travel/Mondulkiri.jpg';
 
+import ahMokImg from '../assets/cuisine/AhMok.jpg';
+import beefLokLakImg from '../assets/cuisine/BeefLokLak.png';
+import kampotPepperCrabImg from '../assets/cuisine/KampotPepperCrab.jpg';
+import numBanhChokImg from '../assets/cuisine/NumBanhChok.jpg';
+
+import apsaraDanceImg from '../assets/ArtsFestivals/ApsaraCelestialDance.jpg';
+import waterFestivalImg from '../assets/ArtsFestivals/BonOmToukWaterFestival.jpg';
+import khmerNewYearImg from '../assets/ArtsFestivals/KhmerNewYearChaulChnamThmey.png';
+
+import angkorWatTempleImg from '../assets/temple/ប្រាសាទអង្គរវត្ត.jpg';
+import bayonTempleImg from '../assets/temple/ប្រាសាទបាយន្ត.jpg';
+import taProhmTempleImg from '../assets/temple/ប្រាសាទតាព្រហ្ម.jpg';
+import banteaySreiTempleImg from '../assets/temple/ប្រាសាទបន្ទាយស្រី.jpg';
+
 // Map of all 25 provinces/capital to offline local imported image assets
 export const LOCAL_PROVINCE_IMAGES = {
   'siem-reap': siemReapImg,
@@ -64,6 +78,29 @@ export const LOCAL_TRAVEL_IMAGES = {
   'bayon-ta-prohm': bayonTaProhmTravelImg,
   'koh-rong': kohRongTravelImg,
   'mondulkiri': mondulkiriTravelImg
+};
+
+// Map of cuisine dishes images
+export const LOCAL_CUISINE_IMAGES = {
+  'fish-amok': ahMokImg,
+  'beef-lok-lak': beefLokLakImg,
+  'kampot-pepper-crab': kampotPepperCrabImg,
+  'num-banh-chok': numBanhChokImg
+};
+
+// Map of Arts and Festivals images
+export const LOCAL_ARTS_FESTIVAL_IMAGES = {
+  'apsara': apsaraDanceImg,
+  'bon-om-touk': waterFestivalImg,
+  'khmer-new-year': khmerNewYearImg
+};
+
+// Map of Temple images
+export const LOCAL_TEMPLE_IMAGES = {
+  'angkor-wat': angkorWatTempleImg,
+  'bayon': bayonTempleImg,
+  'ta-prohm': taProhmTempleImg,
+  'banteay-srei': banteaySreiTempleImg
 };
 
 // Helper SVG generator for offline fallback graphics if needed

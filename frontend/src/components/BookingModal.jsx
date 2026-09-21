@@ -3,6 +3,7 @@ import { DESTINATIONS, ITINERARIES } from '../data/tourismData';
 import { createBookingInAPI } from '../services/api';
 import { X, MapPin, Sparkles, CheckCircle } from 'lucide-react';
 import { getTranslation } from '../data/translations';
+import CustomDatePicker from './CustomDatePicker';
 
 export default function BookingModal({ isOpen, onClose, initialDestination, lang, notesPrefill = '' }) {
   const [destination, setDestination] = useState(initialDestination || 'Siem Reap & Angkor');

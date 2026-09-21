@@ -4,7 +4,7 @@ import { PROVINCES_DATA } from '../data/provincesData';
 import { Search, MapPin, Landmark, Utensils, Calendar, Compass, X } from 'lucide-react';
 import { getTranslation } from '../data/translations';
 
-export default function SearchPalette({ isOpen, onClose, lang, onOpenBooking }) {
+export default function SearchPalette({ isOpen, onClose, lang, onOpenBooking, onOpenMap }) {
   const [query, setQuery] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
   const inputRef = useRef(null);
@@ -164,6 +164,17 @@ export default function SearchPalette({ isOpen, onClose, lang, onOpenBooking }) 
                     <span className="ml-auto text-[10px] font-bold uppercase tracking-wider text-amber-400">
                       {item.type}
                     </span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onClose();
+                      onOpenMap?.(item.title);
+                    }}
+                    className="shrink-0 px-2 py-1 text-[10px] font-bold rounded-lg bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-slate-950 cursor-pointer transition-colors"
+                    title="View Map"
+                  >
+                    Map
                   </button>
                   {item.bookingName && (
                     <button

@@ -11,6 +11,7 @@ import BookingModal from './components/BookingModal';
 import Footer from './components/Footer';
 import SearchPalette from './components/SearchPalette';
 import SavedTrip from './components/SavedTrip';
+import GoogleMapModal from './components/GoogleMapModal';
 import { Sparkles, ArrowUp } from 'lucide-react';
 import { useTrip } from './context/TripContext';
 import { getTranslation } from './data/translations';
@@ -28,6 +29,7 @@ export default function App() {
   const [savedOpen, setSavedOpen] = useState(false);
   const [showTop, setShowTop] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [mapModal, setMapModal] = useState({ isOpen: false, locationName: '', khmerName: '', queryOverride: '' });
   const { saved, toast } = useTrip();
 
   useEffect(() => {
@@ -84,6 +86,15 @@ export default function App() {
     setIsBookingOpen(true);
   };
 
+  const handleOpenMap = (locationName, khmerName = '', queryOverride = '') => {
+    setMapModal({
+      isOpen: true,
+      locationName: locationName || 'Cambodia',
+      khmerName: khmerName || '',
+      queryOverride: queryOverride || `${locationName} ${khmerName} Cambodia`.trim()
+    });
+  };
+
   const handleSearch = (query, category) => {
     setSearchQuery(query);
     setSelectedCategory(category);
@@ -114,12 +125,13 @@ export default function App() {
       />
 
       <main id="main-content">
-        <ProvincesExplorer onOpenBooking={handleOpenBooking} lang={lang} />
+        <ProvincesExplorer onOpenBooking={handleOpenBooking} onOpenMap={handleOpenMap} lang={lang} />
 
         <Destinations
           searchQuery={searchQuery}
           selectedCategory={selectedCategory}
           onOpenBooking={handleOpenBooking}
+          onOpenMap={handleOpenMap}
           lang={lang}
           onClearSearch={() => {
             setSearchQuery('');
@@ -127,8 +139,8 @@ export default function App() {
           }}
         />
 
-        <TempleSpotlight lang={lang} />
-        {/* <CultureSection lang={lang} /> */}
+        <TempleSpotlight lang={lang} onOpenMap={handleOpenMap} />
+        <CultureSection lang={lang} />
         <ItineraryPlanner onOpenBooking={handleOpenBooking} lang={lang} />
         <TravelGuide lang={lang} />
       </main>
@@ -148,12 +160,22 @@ export default function App() {
         onClose={() => setSearchOpen(false)}
         lang={lang}
         onOpenBooking={handleOpenBooking}
+        onOpenMap={handleOpenMap}
       />
 
       <SavedTrip
         isOpen={savedOpen}
         onClose={() => setSavedOpen(false)}
         onOpenBooking={handleOpenBooking}
+        lang={lang}
+      />
+
+      <GoogleMapModal
+        isOpen={mapModal.isOpen}
+        onClose={() => setMapModal((prev) => ({ ...prev, isOpen: false }))}
+        locationName={mapModal.locationName}
+        khmerName={mapModal.khmerName}
+        queryOverride={mapModal.queryOverride}
         lang={lang}
       />
 
