@@ -43,79 +43,45 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
     { label: lang === 'KM' ? 'កំពត' : lang === 'ZH' ? '贡布' : 'Kampot', term: 'Kampot', cat: 'Food' },
   ];
 
-  const stats = [
-    { value: '1,000+', label: getTranslation('hero.statTemples', lang), cls: 'gold-gradient-text' },
-    { value: '7', label: getTranslation('hero.statUnesco', lang), cls: 'gold-gradient-text' },
-    { value: '440 km', label: getTranslation('hero.statCoast', lang), cls: 'cyan-gradient-text' },
-    { value: '25', label: getTranslation('hero.statProvinces', lang), cls: 'emerald-gradient-text' },
-  ];
-
   return (
-    <section className="relative min-h-[100svh] flex items-center overflow-hidden pt-[5.75rem] pb-16 sm:pb-20">
-      <div className="absolute inset-0 z-0 bg-slate-950">
+    <section className="relative min-h-[100svh] flex items-center overflow-hidden pt-[5.75rem] pb-14 sm:pb-16">
+      {/* Clearer, warm-glowing background photo with soft blur */}
+      <div className="absolute inset-0 z-0 overflow-hidden bg-slate-950">
         <SafeImage
           src={heroBg}
           alt="Angkor Wat Sunrise"
           eager
-          className="absolute inset-0 w-full h-full object-cover object-center scale-105 animate-pulse-slow"
+          className="absolute inset-0 w-full h-full object-cover object-center scale-105 blur-[2px] brightness-110 contrast-[1.05] transition-all duration-700"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950/40" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/30 to-slate-950/60" />
+        {/* Soft, subtle gradients to ensure text contrast while keeping Angkor Wat clear */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-950/25 to-slate-950/50" />
       </div>
 
       <div className="relative z-10 site-container w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           <div className="lg:col-span-6 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-card border border-amber-400/50 mb-5 shadow-xl shadow-amber-500/10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel border border-amber-400/40 mb-4 shadow-lg backdrop-blur-md bg-slate-900/50">
               <Sparkles className="w-4 h-4 text-amber-400" />
               <span className="text-[11px] font-bold tracking-widest uppercase text-amber-300">
                 {getTranslation('hero.badge', lang)}
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl xl:text-6xl font-extrabold tracking-tight text-white mb-4 max-w-xl mx-auto lg:mx-0 leading-[1.15] drop-shadow-lg">
+            <h1 className="text-3xl sm:text-5xl xl:text-6xl font-black tracking-tight text-white mb-4 max-w-xl mx-auto lg:mx-0 leading-[1.15] drop-shadow-md">
               <span>{getTranslation('hero.titlePrefix', lang)} </span>
               <span className="gold-gradient-text">{getTranslation('hero.titleHighlight', lang)}</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-200 max-w-lg mx-auto lg:mx-0 mb-7 leading-relaxed font-medium">
+            <p className="text-base sm:text-lg text-slate-100 max-w-lg mx-auto lg:mx-0 mb-2 leading-relaxed font-medium drop-shadow-sm">
               {getTranslation('hero.description', lang)}
             </p>
-
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-8">
-              <button
-                type="button"
-                onClick={() => onOpenBooking()}
-                className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 text-sm font-extrabold shadow-xl shadow-amber-500/30 flex items-center gap-2 hover:scale-[1.02] transition-transform cursor-pointer"
-              >
-                <Sparkles className="w-4 h-4" />
-                <span>{getTranslation('hero.btnPlan', lang)}</span>
-              </button>
-              <a
-                href="#provinces"
-                className="px-6 py-3.5 rounded-2xl glass-panel border border-amber-400/30 text-amber-100 text-sm font-bold flex items-center gap-2 hover:border-amber-400 transition-colors"
-              >
-                <MapPin className="w-4 h-4" />
-                <span>{getTranslation('hero.btnProvinces', lang)}</span>
-              </a>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {stats.map((stat) => (
-                <div key={stat.label} className="glass-panel px-3 py-3 rounded-2xl border border-amber-500/25 text-center bg-slate-950/70">
-                  <div className={`text-xl sm:text-2xl font-extrabold ${stat.cls}`}>{stat.value}</div>
-                  <div className="text-[10px] font-bold text-slate-300 mt-1 uppercase tracking-wider leading-snug">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
 
           <div className="lg:col-span-6">
             <form
               onSubmit={handleSearchSubmit}
-              className="w-full glass-panel p-5 sm:p-6 rounded-3xl border border-amber-400/35 shadow-2xl space-y-4 relative"
+              className="w-full glass-panel p-5 sm:p-6 rounded-3xl border border-amber-400/30 shadow-2xl space-y-4 relative backdrop-blur-xl bg-slate-900/60"
               translate="no"
             >
               <div className="text-left">
@@ -136,11 +102,11 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
                   }}
                   onFocus={() => setShowSuggestions(true)}
                   onBlur={() => setTimeout(() => setShowSuggestions(false), 180)}
-                  className="w-full pl-12 pr-4 py-3.5 bg-slate-950/90 border border-slate-700 rounded-2xl text-white placeholder-slate-400 text-sm font-medium focus:border-amber-400 shadow-inner"
+                  className="w-full pl-12 pr-4 py-3 bg-slate-950/80 border border-slate-700/80 rounded-2xl text-white placeholder-slate-400 text-sm font-medium focus:border-amber-400 focus:outline-none shadow-inner"
                   aria-label="Search destinations"
                 />
                 {showSuggestions && suggestions.length > 0 && (
-                  <div className="absolute left-0 right-0 top-full mt-2 z-20 rounded-2xl overflow-hidden bg-slate-950 border border-amber-500/30 text-left shadow-xl">
+                  <div className="absolute left-0 right-0 top-full mt-2 z-20 rounded-2xl overflow-hidden bg-slate-950/95 border border-amber-500/30 text-left shadow-2xl backdrop-blur-xl">
                     {suggestions.map((d) => (
                       <button
                         key={d.id}
@@ -151,7 +117,7 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
                           setSelectedCat(d.category);
                           runSearch(d.name, d.category);
                         }}
-                        className="w-full px-4 py-2.5 text-sm text-slate-200 hover:bg-amber-500/15 flex items-center justify-between gap-3"
+                        className="w-full px-4 py-2.5 text-sm text-slate-200 hover:bg-amber-500/15 flex items-center justify-between gap-3 cursor-pointer"
                       >
                         <span className="truncate">
                           {lang === 'KM' ? d.khmerName : lang === 'ZH' ? d.zhName : d.name}
@@ -167,7 +133,7 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
                 <select
                   value={selectedCat}
                   onChange={(e) => setSelectedCat(e.target.value)}
-                  className="flex-1 py-3.5 px-3.5 bg-slate-950/90 border border-slate-700 rounded-2xl text-slate-100 text-sm font-semibold cursor-pointer"
+                  className="flex-1 py-3 px-3.5 bg-slate-950/80 border border-slate-700/80 rounded-2xl text-slate-100 text-sm font-semibold cursor-pointer focus:outline-none focus:border-amber-400"
                   aria-label="Category"
                 >
                   <option value="All">{getTranslation('categories.All', lang)}</option>
@@ -179,7 +145,7 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
                 </select>
                 <button
                   type="submit"
-                  className="sm:w-40 px-6 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 font-extrabold rounded-2xl shadow-lg shadow-amber-500/30 flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform cursor-pointer"
+                  className="sm:w-36 px-5 py-3 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 font-extrabold rounded-2xl shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer text-xs uppercase tracking-wider"
                 >
                   <span>{getTranslation('hero.btnExplore', lang)}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -196,7 +162,7 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
                       setSelectedCat(chip.cat);
                       runSearch(chip.term, chip.cat);
                     }}
-                    className="px-3.5 py-1.5 rounded-xl text-[11px] font-bold text-amber-100 border border-amber-400/30 bg-slate-950/60 hover:bg-amber-500/20 transition-colors cursor-pointer"
+                    className="px-3 py-1 rounded-xl text-[11px] font-bold text-amber-200 border border-amber-400/30 bg-slate-950/50 hover:bg-amber-500/20 transition-colors cursor-pointer"
                   >
                     {chip.label}
                   </button>
@@ -208,10 +174,10 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
 
         <a
           href="#provinces"
-          className="mt-10 mx-auto w-fit text-slate-300 hover:text-amber-300 flex flex-col items-center gap-1 text-xs font-semibold"
+          className="mt-8 mx-auto w-fit text-amber-200/80 hover:text-amber-300 flex flex-col items-center gap-1 text-xs font-semibold transition-colors"
         >
           <span>{getTranslation('hero.scrollExplore', lang)}</span>
-          <ChevronDown className="w-5 h-5 animate-bounce" />
+          <ChevronDown className="w-5 h-5 animate-bounce text-amber-400" />
         </a>
       </div>
     </section>

@@ -1,20 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { PROVINCES_DATA } from '../data/provincesData';
-import { Map, Search, Sparkles, CheckCircle2, ArrowUpRight, X, Compass, Heart, Info } from 'lucide-react';
-import { useTrip } from '../context/TripContext';
-import { getTranslation } from '../data/translations';
-import SafeImage from './SafeImage';
+import React, { useEffect, useState } from "react";
+import { PROVINCES_DATA } from "../data/provincesData";
+import {
+  Map,
+  Search,
+  Sparkles,
+  CheckCircle2,
+  ArrowUpRight,
+  X,
+  Compass,
+  Heart,
+  Info,
+} from "lucide-react";
+import { useTrip } from "../context/TripContext";
+import { getTranslation } from "../data/translations";
+import SafeImage from "./SafeImage";
 
 export default function ProvincesExplorer({ onOpenBooking, lang }) {
-  const [selectedRegion, setSelectedRegion] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedRegion, setSelectedRegion] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   const [activeProvince, setActiveProvince] = useState(null);
   const { toggleSave, isSaved } = useTrip();
 
-  const regions = ['All', 'Northwest', 'Central & Mekong', 'Coastal', 'Eastern Eco-Highlands'];
+  const regions = [
+    "All",
+    "Northwest",
+    "Central & Mekong",
+    "Coastal",
+    "Eastern Eco-Highlands",
+  ];
 
   const filteredProvinces = PROVINCES_DATA.filter((item) => {
-    const matchesRegion = selectedRegion === 'All' || item.region === selectedRegion;
+    const matchesRegion =
+      selectedRegion === "All" || item.region === selectedRegion;
     const q = searchQuery.toLowerCase().trim();
     const matchesSearch =
       !q ||
@@ -29,27 +46,27 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
   useEffect(() => {
     if (!activeProvince) return undefined;
     const onKey = (e) => {
-      if (e.key === 'Escape') setActiveProvince(null);
+      if (e.key === "Escape") setActiveProvince(null);
     };
-    window.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
     return () => {
-      window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
     };
   }, [activeProvince]);
 
   const getProvinceTitle = (p) => {
-    if (lang === 'KM') return p.khmerName;
-    if (lang === 'ZH') return p.zhName;
-    if (lang === 'FR') return p.frName || p.name;
+    if (lang === "KM") return p.khmerName;
+    if (lang === "ZH") return p.zhName;
+    if (lang === "FR") return p.frName || p.name;
     return p.name;
   };
 
   const getProvinceDesc = (p) => {
-    if (lang === 'KM') return p.descriptionKm || p.description;
-    if (lang === 'ZH') return p.descriptionZh || p.description;
-    if (lang === 'FR') return p.descriptionFr || p.description;
+    if (lang === "KM") return p.descriptionKm || p.description;
+    if (lang === "ZH") return p.descriptionZh || p.description;
+    if (lang === "FR") return p.descriptionFr || p.description;
     return p.description;
   };
 
@@ -59,14 +76,16 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
         <div className="section-header">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-500 dark:text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
             <Map className="w-3.5 h-3.5" />
-            <span>{getTranslation('provinces.badge', lang)}</span>
+            <span>{getTranslation("provinces.badge", lang)}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-white">
-            <span>{getTranslation('provinces.titlePrefix', lang)} </span>
-            <span className="gold-gradient-text">{getTranslation('provinces.titleHighlight', lang)}</span>
+            <span>{getTranslation("provinces.titlePrefix", lang)} </span>
+            <span className="gold-gradient-text">
+              {getTranslation("provinces.titleHighlight", lang)}
+            </span>
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
-            {getTranslation('provinces.desc', lang)}
+            {getTranslation("provinces.desc", lang)}
           </p>
         </div>
 
@@ -76,7 +95,7 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
             <Search className="absolute left-4 top-3.5 w-5 h-5 text-amber-500 dark:text-amber-400 pointer-events-none" />
             <input
               type="text"
-              placeholder={getTranslation('provinces.searchPlaceholder', lang)}
+              placeholder={getTranslation("provinces.searchPlaceholder", lang)}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-slate-900 dark:text-white text-sm shadow-md focus:outline-none focus:border-amber-500 transition-all"
@@ -91,11 +110,11 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
                 onClick={() => setSelectedRegion(regKey)}
                 className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                   selectedRegion === regKey
-                    ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-lg shadow-amber-500/20 scale-105'
-                    : 'glass-card text-slate-700 dark:text-slate-300 hover:text-amber-500 dark:hover:text-amber-300 border border-slate-200 dark:border-slate-800'
+                    ? "bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-lg shadow-amber-500/20 scale-105"
+                    : "glass-card text-slate-700 dark:text-slate-300 hover:text-amber-500 dark:hover:text-amber-300 border border-slate-200 dark:border-slate-800"
                 }`}
               >
-                {getTranslation('regions.' + regKey, lang)}
+                {getTranslation("regions." + regKey, lang)}
               </button>
             ))}
           </div>
@@ -104,10 +123,12 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
         {/* Province Grid Summary count */}
         <div className="mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
           <span>
-            {getTranslation('provinces.showing', lang)} <strong>{filteredProvinces.length}</strong> {getTranslation('provinces.ofProvinces', lang)}
+            {getTranslation("provinces.showing", lang)}{" "}
+            <strong>{filteredProvinces.length}</strong>{" "}
+            {getTranslation("provinces.ofProvinces", lang)}
           </span>
           <span className="font-semibold text-amber-600 dark:text-amber-400">
-            {getTranslation('provinces.summaryNote', lang)}
+            {getTranslation("provinces.summaryNote", lang)}
           </span>
         </div>
 
@@ -128,7 +149,8 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
                   <span className="absolute top-3 left-3 bg-slate-900/80 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-amber-400 border border-slate-700">
-                    {getTranslation('regions.' + prov.region, lang) || prov.region}
+                    {getTranslation("regions." + prov.region, lang) ||
+                      prov.region}
                   </span>
                   <button
                     type="button"
@@ -136,16 +158,18 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
                       toggleSave({
                         id: `prov-${prov.id}`,
                         name: title,
-                        kind: 'Province',
+                        kind: "Province",
                         meta: prov.region,
                         image: prov.image,
-                        lang
+                        lang,
                       })
                     }
                     className="absolute top-3 right-3 w-8 h-8 rounded-full bg-slate-900/80 border border-amber-400/40 flex items-center justify-center cursor-pointer"
                     aria-label="Save province"
                   >
-                    <Heart className={`w-3.5 h-3.5 ${isSaved(`prov-${prov.id}`) ? 'fill-amber-400 text-amber-400' : 'text-amber-200'}`} />
+                    <Heart
+                      className={`w-3.5 h-3.5 ${isSaved(`prov-${prov.id}`) ? "fill-amber-400 text-amber-400" : "text-amber-200"}`}
+                    />
                   </button>
 
                   <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
@@ -153,7 +177,9 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
                       <span className="text-[11px] font-bold text-amber-300 uppercase tracking-widest block">
                         {prov.khmerName}
                       </span>
-                      <h3 className="text-xl font-extrabold text-white">{title}</h3>
+                      <h3 className="text-xl font-extrabold text-white">
+                        {title}
+                      </h3>
                     </div>
                   </div>
                 </div>
@@ -165,7 +191,7 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
 
                   <div className="space-y-1.5 pt-2 border-t border-slate-100 dark:border-slate-800">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 block">
-                      {getTranslation('provinces.topAttractions', lang)}
+                      {getTranslation("provinces.topAttractions", lang)}
                     </span>
                     <div className="flex flex-wrap gap-1">
                       {prov.topAttractions.slice(0, 3).map((att, idx) => (
@@ -184,7 +210,9 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
                     onClick={() => setActiveProvince(prov)}
                     className="w-full mt-2 py-2 bg-amber-500/10 hover:bg-amber-500 hover:text-slate-950 text-amber-600 dark:text-amber-400 text-xs font-bold rounded-xl border border-amber-500/30 transition-all flex items-center justify-center gap-1 cursor-pointer"
                   >
-                    <span>{getTranslation('provinces.viewAttractions', lang)}</span>
+                    <span>
+                      {getTranslation("provinces.viewAttractions", lang)}
+                    </span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -197,25 +225,31 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
           <div className="text-center py-14 glass-card rounded-2xl max-w-lg mx-auto mt-6">
             <Info className="w-10 h-10 text-amber-500 mx-auto mb-3" />
             <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">
-              {getTranslation('provinces.noResultsTitle', lang)}
+              {getTranslation("provinces.noResultsTitle", lang)}
             </h3>
             <button
               type="button"
               onClick={() => {
-                setSearchQuery('');
-                setSelectedRegion('All');
+                setSearchQuery("");
+                setSelectedRegion("All");
               }}
               className="mt-3 px-4 py-2 rounded-xl bg-amber-500 text-slate-950 text-xs font-extrabold cursor-pointer"
             >
-              {getTranslation('provinces.resetFilters', lang)}
+              {getTranslation("provinces.resetFilters", lang)}
             </button>
           </div>
         )}
 
         {/* Modal Detail for Active Province */}
         {activeProvince && (
-          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in" onClick={() => setActiveProvince(null)}>
-            <div className="glass-panel w-full max-w-2xl rounded-3xl border border-amber-500/30 shadow-2xl p-6 sm:p-8 relative" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in"
+            onClick={() => setActiveProvince(null)}
+          >
+            <div
+              className="glass-panel w-full max-w-2xl rounded-3xl border border-amber-500/30 shadow-2xl p-6 sm:p-8 relative"
+              onClick={(e) => e.stopPropagation()}
+            >
               <button
                 type="button"
                 onClick={() => setActiveProvince(null)}
@@ -230,9 +264,13 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
                 </div>
                 <div>
                   <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">
-                    {activeProvince.khmerName} • {getTranslation('regions.' + activeProvince.region, lang) || activeProvince.region}
+                    {activeProvince.khmerName} •{" "}
+                    {getTranslation("regions." + activeProvince.region, lang) ||
+                      activeProvince.region}
                   </span>
-                  <h3 className="text-3xl font-extrabold text-white">{getProvinceTitle(activeProvince)}</h3>
+                  <h3 className="text-3xl font-extrabold text-white">
+                    {getProvinceTitle(activeProvince)}
+                  </h3>
                 </div>
               </div>
 
@@ -243,11 +281,16 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
               <div className="glass-card p-4 rounded-2xl border border-slate-800 mb-6 space-y-3">
                 <h4 className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>{getTranslation('provinces.landmarksHeader', lang)}</span>
+                  <span>
+                    {getTranslation("provinces.landmarksHeader", lang)}
+                  </span>
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {activeProvince.topAttractions.map((spot, idx) => (
-                    <div key={idx} className="p-2 bg-slate-900/80 rounded-xl text-xs text-slate-200 border border-slate-800 flex items-center gap-2">
+                    <div
+                      key={idx}
+                      className="p-2 bg-slate-900/80 rounded-xl text-xs text-slate-200 border border-slate-800 flex items-center gap-2"
+                    >
                       <span className="w-2 h-2 rounded-full bg-amber-400" />
                       <span>{spot}</span>
                     </div>
@@ -261,7 +304,7 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
                   onClick={() => setActiveProvince(null)}
                   className="w-full sm:w-auto px-5 py-2.5 bg-slate-800 text-slate-300 text-xs font-semibold rounded-xl cursor-pointer"
                 >
-                  {getTranslation('provinces.close', lang)}
+                  {getTranslation("provinces.close", lang)}
                 </button>
                 <button
                   type="button"
@@ -272,7 +315,7 @@ export default function ProvincesExplorer({ onOpenBooking, lang }) {
                   className="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-xs font-extrabold rounded-xl shadow-lg flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4" />
-                  <span>{getTranslation('provinces.bookTour', lang)}</span>
+                  <span>{getTranslation("provinces.bookTour", lang)}</span>
                 </button>
               </div>
             </div>
