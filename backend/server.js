@@ -14,16 +14,32 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// API Routes
+// Root URL Route Handler (http://localhost:5000/)
+app.get('/', (req, res) => {
+  res.json({
+    message: '🇰🇭 Welcome to Tourism in Cambodia REST API Server',
+    status: 'online',
+    database: 'SQLite (backend/database.sqlite)',
+    endpoints: {
+      health: '/api/health',
+      destinations: '/api/destinations',
+      temples: '/api/temples',
+      cuisine: '/api/cuisine',
+      bookings: '/api/bookings (GET & POST)',
+      newsletter: '/api/newsletter (POST)'
+    },
+    timestamp: new Date().toISOString()
+  });
+});
+
+// API Routes (http://localhost:5000/api)
 app.use('/api', apiRoutes);
 
-// Health check endpoint
-app.get('/api/health', (req, res) => {
-  res.json({
-    status: 'online',
-    system: 'Cambodia Tourism API Server',
-    database: 'SQLite',
-    timestamp: new Date().toISOString()
+// Catch-all 404 Route
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `Route '${req.originalUrl}' not found. Please visit /api/health or / for API documentation.`
   });
 });
 
