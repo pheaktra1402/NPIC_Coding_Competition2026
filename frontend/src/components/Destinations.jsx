@@ -76,11 +76,11 @@ export default function Destinations({ searchQuery, selectedCategory, onOpenBook
             <MapPin className="w-3.5 h-3.5" />
             <span>{getTranslation('destinations.badge', lang)}</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
-            <span>{getTranslation('destinations.titlePrefix', lang)} </span>
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
+            <span className="text-slate-900 dark:text-white">{getTranslation('destinations.titlePrefix', lang)} </span>
             <span className="gold-gradient-text">{getTranslation('destinations.titleHighlight', lang)}</span>
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-slate-600 dark:text-slate-300 text-base sm:text-lg max-w-2xl mx-auto font-medium">
             {getTranslation('destinations.desc', lang)}
           </p>
         </div>
@@ -95,7 +95,7 @@ export default function Destinations({ searchQuery, selectedCategory, onOpenBook
                 className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer ${
                   activeTab === catKey
                     ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-lg shadow-amber-500/25'
-                    : 'glass-card text-slate-700 dark:text-slate-300 hover:text-amber-500 border border-slate-200 dark:border-slate-800'
+                    : 'glass-card text-slate-700 dark:text-slate-200 hover:text-amber-500 border border-slate-200 dark:border-slate-800'
                 }`}
               >
                 {getTranslation('categories.' + catKey, lang)}
@@ -103,7 +103,7 @@ export default function Destinations({ searchQuery, selectedCategory, onOpenBook
             ))}
           </div>
           <div className="flex items-center gap-3 text-xs">
-            <label className="text-slate-500 font-semibold">
+            <label className="text-slate-500 dark:text-slate-400 font-semibold">
               Sort:
               <select
                 value={sortBy}
@@ -178,7 +178,7 @@ export default function Destinations({ searchQuery, selectedCategory, onOpenBook
                 </div>
 
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                  <p className="text-slate-600 dark:text-slate-300 text-sm line-clamp-3 leading-relaxed">
+                  <p className="text-slate-600 dark:text-slate-300 text-sm line-clamp-3 leading-relaxed font-medium">
                     {desc}
                   </p>
 
@@ -242,7 +242,7 @@ export default function Destinations({ searchQuery, selectedCategory, onOpenBook
       {/* Destination Detail Modal */}
       {activeDestination && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in" onClick={() => setActiveDestination(null)}>
-          <div className="glass-panel w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/40 shadow-2xl relative" onClick={(e) => e.stopPropagation()}>
+          <div className="glass-panel w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/40 shadow-2xl relative bg-white dark:bg-slate-900 text-slate-900 dark:text-white" onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
               onClick={() => setActiveDestination(null)}

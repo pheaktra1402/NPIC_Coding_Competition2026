@@ -37,10 +37,10 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
   };
 
   const quickChips = [
-    { label: lang === 'KM' ? 'អង្គរ' : lang === 'ZH' ? '吴哥窟' : lang === 'FR' ? 'Angkor' : 'Angkor', term: 'Siem Reap', cat: 'Temples' },
-    { label: lang === 'KM' ? 'កោះរ៉ុង' : lang === 'ZH' ? '高龙岛' : lang === 'FR' ? 'Koh Rong' : 'Koh Rong', term: 'Koh Rong', cat: 'Beaches' },
-    { label: lang === 'KM' ? 'ភ្នំពេញ' : lang === 'ZH' ? '金边' : lang === 'FR' ? 'Phnom Penh' : 'Phnom Penh', term: 'Phnom Penh', cat: 'Culture' },
-    { label: lang === 'KM' ? 'កំពត' : lang === 'ZH' ? '贡布' : lang === 'FR' ? 'Kampot' : 'Kampot', term: 'Kampot', cat: 'Food' },
+    { label: lang === 'KM' ? 'អង្គរ' : lang === 'ZH' ? '吴哥窟' : 'Angkor', term: 'Siem Reap', cat: 'Temples' },
+    { label: lang === 'KM' ? 'កោះរ៉ុង' : lang === 'ZH' ? '高龙岛' : 'Koh Rong', term: 'Koh Rong', cat: 'Beaches' },
+    { label: lang === 'KM' ? 'ភ្នំពេញ' : lang === 'ZH' ? '金边' : 'Phnom Penh', term: 'Phnom Penh', cat: 'Culture' },
+    { label: lang === 'KM' ? 'កំពត' : lang === 'ZH' ? '贡布' : 'Kampot', term: 'Kampot', cat: 'Food' },
   ];
 
   const stats = [
@@ -59,7 +59,7 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
           eager
           className="absolute inset-0 w-full h-full object-cover object-center scale-105 animate-pulse-slow"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950/40" />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/30 to-slate-950/60" />
       </div>
 
@@ -78,7 +78,7 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
               <span className="gold-gradient-text">{getTranslation('hero.titleHighlight', lang)}</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-200 max-w-lg mx-auto lg:mx-0 mb-7 leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-200 max-w-lg mx-auto lg:mx-0 mb-7 leading-relaxed font-medium">
               {getTranslation('hero.description', lang)}
             </p>
 
@@ -86,14 +86,14 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
               <button
                 type="button"
                 onClick={() => onOpenBooking()}
-                className="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 text-sm font-extrabold shadow-lg shadow-amber-500/30 flex items-center gap-2 hover:scale-[1.02] transition-transform cursor-pointer"
+                className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 text-sm font-extrabold shadow-xl shadow-amber-500/30 flex items-center gap-2 hover:scale-[1.02] transition-transform cursor-pointer"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>{getTranslation('hero.btnPlan', lang)}</span>
               </button>
               <a
                 href="#provinces"
-                className="px-5 py-3 rounded-xl glass-panel border border-amber-400/30 text-amber-100 text-sm font-bold flex items-center gap-2 hover:border-amber-400"
+                className="px-6 py-3.5 rounded-2xl glass-panel border border-amber-400/30 text-amber-100 text-sm font-bold flex items-center gap-2 hover:border-amber-400 transition-colors"
               >
                 <MapPin className="w-4 h-4" />
                 <span>{getTranslation('hero.btnProvinces', lang)}</span>
@@ -102,7 +102,7 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {stats.map((stat) => (
-                <div key={stat.label} className="glass-panel px-3 py-3.5 rounded-2xl border border-amber-500/25 text-center bg-slate-950/70">
+                <div key={stat.label} className="glass-panel px-3 py-3 rounded-2xl border border-amber-500/25 text-center bg-slate-950/70">
                   <div className={`text-xl sm:text-2xl font-extrabold ${stat.cls}`}>{stat.value}</div>
                   <div className="text-[10px] font-bold text-slate-300 mt-1 uppercase tracking-wider leading-snug">
                     {stat.label}
@@ -115,16 +115,13 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
           <div className="lg:col-span-6">
             <form
               onSubmit={handleSearchSubmit}
-              className="w-full glass-panel p-4 sm:p-5 rounded-3xl border border-amber-400/35 shadow-2xl space-y-3 relative"
+              className="w-full glass-panel p-5 sm:p-6 rounded-3xl border border-amber-400/35 shadow-2xl space-y-4 relative"
               translate="no"
             >
-              <div className="text-left mb-1">
-                <p className="text-xs font-extrabold uppercase tracking-wider text-amber-300">
+              <div className="text-left">
+                <span className="text-[10px] font-black uppercase tracking-widest text-amber-400">
                   {getTranslation('hero.searchTitle', lang)}
-                </p>
-                <p className="text-xs text-slate-300 mt-1">
-                  {getTranslation('hero.searchSubtitle', lang)}
-                </p>
+                </span>
               </div>
 
               <div className="relative">
@@ -139,7 +136,7 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
                   }}
                   onFocus={() => setShowSuggestions(true)}
                   onBlur={() => setTimeout(() => setShowSuggestions(false), 180)}
-                  className="w-full pl-12 pr-4 py-3.5 bg-slate-950/90 border border-slate-700 rounded-2xl text-white placeholder-slate-400 text-sm font-medium focus:border-amber-400"
+                  className="w-full pl-12 pr-4 py-3.5 bg-slate-950/90 border border-slate-700 rounded-2xl text-white placeholder-slate-400 text-sm font-medium focus:border-amber-400 shadow-inner"
                   aria-label="Search destinations"
                 />
                 {showSuggestions && suggestions.length > 0 && (
@@ -166,11 +163,11 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
                 )}
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-2">
+              <div className="flex flex-col sm:flex-row gap-2.5">
                 <select
                   value={selectedCat}
                   onChange={(e) => setSelectedCat(e.target.value)}
-                  className="flex-1 py-3.5 px-3 bg-slate-950/90 border border-slate-700 rounded-2xl text-slate-100 text-sm font-semibold"
+                  className="flex-1 py-3.5 px-3.5 bg-slate-950/90 border border-slate-700 rounded-2xl text-slate-100 text-sm font-semibold cursor-pointer"
                   aria-label="Category"
                 >
                   <option value="All">{getTranslation('categories.All', lang)}</option>
@@ -199,7 +196,7 @@ export default function Hero({ onSearch, onSelectCategory, onOpenBooking, lang }
                       setSelectedCat(chip.cat);
                       runSearch(chip.term, chip.cat);
                     }}
-                    className="px-3 py-1.5 rounded-full text-[11px] font-bold text-amber-100 border border-amber-400/30 bg-slate-950/50 hover:bg-amber-500/20"
+                    className="px-3.5 py-1.5 rounded-xl text-[11px] font-bold text-amber-100 border border-amber-400/30 bg-slate-950/60 hover:bg-amber-500/20 transition-colors cursor-pointer"
                   >
                     {chip.label}
                   </button>

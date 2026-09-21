@@ -1,4 +1,4 @@
-import { LOCAL_PROVINCE_IMAGES, getOfflineIllustration } from './localImages';
+import { LOCAL_PROVINCE_IMAGES, LOCAL_TRAVEL_IMAGES, getOfflineIllustration } from './localImages';
 
 export const DESTINATIONS = [
   {
@@ -11,11 +11,11 @@ export const DESTINATIONS = [
     category: 'Temples',
     rating: 4.9,
     reviewsCount: 14200,
-    heroImage: LOCAL_PROVINCE_IMAGES['siem-reap'] || getOfflineIllustration('Heritage', 'Angkor Wat'),
+    heroImage: LOCAL_TRAVEL_IMAGES['angkor-wat'] || LOCAL_PROVINCE_IMAGES['siem-reap'],
     gallery: [
-      LOCAL_PROVINCE_IMAGES['siem-reap'] || getOfflineIllustration('Heritage', 'Angkor Wat'),
-      LOCAL_PROVINCE_IMAGES['banteay-meanchey'] || getOfflineIllustration('Heritage', 'Bayon Temple'),
-      LOCAL_PROVINCE_IMAGES['kampot'] || getOfflineIllustration('Heritage', 'Ta Prohm')
+      LOCAL_TRAVEL_IMAGES['angkor-wat'] || LOCAL_PROVINCE_IMAGES['siem-reap'],
+      LOCAL_TRAVEL_IMAGES['bayon-ta-prohm'] || LOCAL_PROVINCE_IMAGES['banteay-meanchey'],
+      LOCAL_PROVINCE_IMAGES['siem-reap']
     ],
     tagline: 'Gateway to the Ancient Khmer Empire & World Heritage',
     taglineKm: 'ទ្វារទៅកាន់អាណាចក្រខ្មែរបុរាណ និងបេតិកភណ្ឌពិភពលោក',
@@ -40,10 +40,10 @@ export const DESTINATIONS = [
     category: 'Culture',
     rating: 4.7,
     reviewsCount: 8900,
-    heroImage: getOfflineIllustration('Culture', 'Phnom Penh Royal Palace'),
+    heroImage: LOCAL_PROVINCE_IMAGES['phnom-penh'] || getOfflineIllustration('Culture', 'Phnom Penh Royal Palace'),
     gallery: [
-      getOfflineIllustration('Culture', 'Royal Palace'),
-      getOfflineIllustration('Culture', 'Mekong Riverfront')
+      LOCAL_PROVINCE_IMAGES['phnom-penh'],
+      LOCAL_PROVINCE_IMAGES['kandal']
     ],
     tagline: 'The Pearl of Asia — Capital of Heritage & Modern Energy',
     taglineKm: 'កែវមុជដុតៃអាស៊ី — រាជធានីនៃបេតិកភណ្ឌ និងថាមពលទំនើប',
@@ -68,10 +68,10 @@ export const DESTINATIONS = [
     category: 'Beaches',
     rating: 4.9,
     reviewsCount: 6300,
-    heroImage: getOfflineIllustration('Coastal', 'Koh Rong Tropical Beach'),
+    heroImage: LOCAL_TRAVEL_IMAGES['koh-rong'] || LOCAL_PROVINCE_IMAGES['preah-sihanouk'],
     gallery: [
-      getOfflineIllustration('Coastal', 'Koh Rong Turquoise Water'),
-      getOfflineIllustration('Coastal', 'Bioluminescent Plankton')
+      LOCAL_TRAVEL_IMAGES['koh-rong'] || LOCAL_PROVINCE_IMAGES['preah-sihanouk'],
+      LOCAL_PROVINCE_IMAGES['preah-sihanouk']
     ],
     tagline: 'Tropical Island Paradise with Bioluminescent Waters',
     taglineKm: 'ឋានសួគ៌កោះសមុទ្រ ជាមួយទឹកសមុទ្រភ្លឺចែងចាំងនៅពេលយប់',
@@ -96,10 +96,10 @@ export const DESTINATIONS = [
     category: 'Food',
     rating: 4.8,
     reviewsCount: 5100,
-    heroImage: LOCAL_PROVINCE_IMAGES['kampot'] || getOfflineIllustration('Food', 'Kampot & Kep'),
+    heroImage: LOCAL_PROVINCE_IMAGES['kampot'] || LOCAL_PROVINCE_IMAGES['kep'],
     gallery: [
-      LOCAL_PROVINCE_IMAGES['kampot'] || getOfflineIllustration('Food', 'Kampot Pepper'),
-      getOfflineIllustration('Coastal', 'Kep Crab')
+      LOCAL_PROVINCE_IMAGES['kampot'],
+      LOCAL_PROVINCE_IMAGES['kep']
     ],
     tagline: 'French Colonial Charm, World Famous Pepper & Fresh Crab',
     taglineKm: 'អគារបារាំងបុរាណ ម្រេចកំពតល្បីលើពិភពលោក និងក្តាមសេះស្រស់កែប',
@@ -124,9 +124,10 @@ export const DESTINATIONS = [
     category: 'Nature',
     rating: 4.8,
     reviewsCount: 3200,
-    heroImage: getOfflineIllustration('Eco-Tourism & Wildlife', 'Mondulkiri Elephants'),
+    heroImage: LOCAL_TRAVEL_IMAGES['mondulkiri'] || LOCAL_PROVINCE_IMAGES['mondulkiri'],
     gallery: [
-      getOfflineIllustration('Eco-Tourism & Wildlife', 'Bousra Waterfall')
+      LOCAL_TRAVEL_IMAGES['mondulkiri'] || LOCAL_PROVINCE_IMAGES['mondulkiri'],
+      LOCAL_PROVINCE_IMAGES['ratanakiri']
     ],
     tagline: 'Rolling Pine Hills, Majestic Waterfalls & Ethical Elephant Sanctuary',
     taglineKm: 'ព្រៃស្រល់លាស់ខៀវស្រងាត់ ទឹកធ្លាក់ប៊ូស្រា និងជម្រកការពារដំរី',
@@ -151,9 +152,10 @@ export const DESTINATIONS = [
     category: 'Culture',
     rating: 4.7,
     reviewsCount: 4400,
-    heroImage: LOCAL_PROVINCE_IMAGES['battambang'] || getOfflineIllustration('Culture', 'Battambang Bamboo Train'),
+    heroImage: LOCAL_PROVINCE_IMAGES['battambang'],
     gallery: [
-      LOCAL_PROVINCE_IMAGES['battambang'] || getOfflineIllustration('Culture', 'Phnom Sampeau Bat Cave')
+      LOCAL_PROVINCE_IMAGES['battambang'],
+      LOCAL_PROVINCE_IMAGES['pursat']
     ],
     tagline: 'Artistic Capital, Famous Bamboo Train & Million Bat Caves',
     taglineKm: 'រាជធានីសិល្បៈ ឡូរីជិះកម្សាន្ត និងល្អាងប្រជៀវរាប់លានក្បាល',
@@ -184,7 +186,7 @@ export const TEMPLES = [
     descriptionKm: 'កសាងឡើងជាប្រាសាទព្រហ្មញ្ញសាសនាឧទ្ទិសជូនព្រះវិស្ណុ និងបានក្លាយជាប្រាសាទព្រះពុទ្ធសាសនា។ អង្គរវត្តតំណាងឱ្យភ្នំព្រះសុមេរុ មានកំពូលផ្កាឈូក និងចម្លាក់ថ្វាយព្រះ។',
     descriptionZh: '作为献给毗湿奴的印度教神庙而建，后逐渐演变为佛教神庙。吴哥窟代表须弥山在人间之化身。以对称的莲花蕾宝塔、精美的壁画浮雕和日出倒影池闻名于世。',
     descriptionFr: 'Construit comme un temple hindou dédié à Vishnou, Angkor Wat représente le mont Meru sur Terre. Célèbre pour ses tours en bouton de lotus et son lever de soleil.',
-    image: LOCAL_PROVINCE_IMAGES['siem-reap'] || getOfflineIllustration('Heritage', 'Angkor Wat Main Tower'),
+    image: LOCAL_TRAVEL_IMAGES['angkor-wat'] || LOCAL_PROVINCE_IMAGES['siem-reap'],
     hotspots: [
       { title: 'Central Sanctuary Towers', desc: 'Representing the 5 peaks of Mount Meru, rising 65 meters above ground level.' },
       { title: 'Bas-Relief Gallery of Churning the Ocean of Milk', desc: 'Famous 49-meter carved wall showing 88 devas and 92 asuras wrestling the cosmic serpent.' },
@@ -204,7 +206,7 @@ export const TEMPLES = [
     descriptionKm: 'ស្ថិតនៅចំកណ្តាលរាជធានីអង្គរធំ ប្រាសាទបាយ័នមានប្រាសាទកំពូល ៥៤ ដែលមានចម្លាក់ព្រហ្មមុខ ៤ ញញឹមយ៉ាងប្រៀបប្រដៅ។',
     descriptionZh: '位于古城大吴哥城的核心正中，巴戎寺因其54座哥特式宝塔上雕刻的宁静微笑四面石佛雕像而独树一帜，墙壁展示了12世纪高棉海军交战与平民生活。',
     descriptionFr: 'Situé au cœur de la ville fortifiée d\'Angkor Thom, le Bayon se distingue par ses 54 tours sculptées de visage souriants.',
-    image: LOCAL_PROVINCE_IMAGES['banteay-meanchey'] || getOfflineIllustration('Heritage', 'Bayon Temple Smiling Face'),
+    image: LOCAL_TRAVEL_IMAGES['bayon-ta-prohm'] || LOCAL_PROVINCE_IMAGES['banteay-meanchey'],
     hotspots: [
       { title: 'Smiling Towers', desc: 'Carved giant stone faces said to represent King Jayavarman VII and Avalokiteshvara.' },
       { title: 'Outer Wall Bas-Reliefs', desc: 'Carvings portraying naval battles with the Chams, market vendors, and cockfights.' }
@@ -223,7 +225,7 @@ export const TEMPLES = [
     descriptionKm: 'រក្សាទុកក្នុងស្ថានភាពដើម ប្រាសាទតាព្រហ្មល្បីល្បាញខាងឫសឈើធំៗ (ដើមស្ពង់) ដុះព័ទ្ធលើជញ្ជាំងថ្មបុរាណ។',
     descriptionZh: '很大程度上保留了发现时的原始状态，塔普伦寺因巨型木棉树根缠绕交错于千年古石廊之上而闻名。作为国王为其母亲修建的修道院，给人无限古老文明的震撼。',
     descriptionFr: 'Laissé dans son état de découverte, Ta Prohm est célèbre pour ses racines colossales d\'arbres enveloppant les ruines.',
-    image: LOCAL_PROVINCE_IMAGES['kampot'] || getOfflineIllustration('Heritage', 'Ta Prohm Tree Roots'),
+    image: LOCAL_TRAVEL_IMAGES['bayon-ta-prohm'] || LOCAL_PROVINCE_IMAGES['kampot'],
     hotspots: [
       { title: 'Crocodile Tree Root Wall', desc: 'Massive root structure strangling ancient sandstone archway.' },
       { title: 'Crocodile Root Courtyard', desc: 'The iconic Hollywood film setting for Tomb Raider.' }
@@ -242,7 +244,7 @@ export const TEMPLES = [
     descriptionKm: 'ស្គាល់ថាជា «កែវមុជសិល្បៈខ្មែរ» កសាងពីថ្មភក់ពណ៌ផ្កាឈូក មានចម្លាក់យ៉ាងល្អិតល្អន់ និងស្រស់ស្អាតបំផុត។',
     descriptionZh: '被誉为“高棉艺术的皇冠明珠”，女王宫由粉红色砂岩打造，拥有如雕花木艺般精致立体的三维壁雕。供奉湿婆神，拥有全吴哥保护最完好的雕刻细节。',
     descriptionFr: 'Connu comme le "Joyau de l\'art khmer", Banteay Srei est construit en grès rose avec des sculptures en micro-détail.',
-    image: getOfflineIllustration('Heritage', 'Banteay Srei Pink Sandstone'),
+    image: LOCAL_PROVINCE_IMAGES['siem-reap'],
     hotspots: [
       { title: 'Pink Sandstone Devatas', desc: 'Exquisite female guardian deities carved into niches.' },
       { title: 'Lintels of Ramayana Myth', desc: 'Intricate lintels illustrating stories of Ravana and Indra.' }
@@ -314,7 +316,7 @@ export const CULTURE_ARTS = [
     zhTitle: '送水节龙舟赛与祭月节',
     frTitle: 'Fête des Eaux (Bon Om Touk)',
     type: 'Annual Festival (November)',
-    image: getOfflineIllustration('Culture', 'Water Festival Dragon Boats'),
+    image: LOCAL_PROVINCE_IMAGES['phnom-penh'] || getOfflineIllustration('Culture', 'Water Festival Dragon Boats'),
     summary: 'Celebrates the reversal of the Tonle Sap river flow — a natural wonder! Millions gather along Phnom Penh’s riverbank to watch colorful dragon boat races, evening illuminated floats (Loy Pratip), and full moon moon-worshipping ceremonies.',
     details: 'Held over 3 days every November during the full moon of Kadduk month, signaling the end of the rainy season and abundant fishing.'
   },
@@ -324,7 +326,7 @@ export const CULTURE_ARTS = [
     zhTitle: '柬埔寨传统新年 (宋干节)',
     frTitle: 'Nouvel An Khmer (Chaul Chnam Thmey)',
     type: 'Annual Festival (Mid-April)',
-    image: getOfflineIllustration('Culture', 'Khmer New Year Angkor Sangkranta'),
+    image: LOCAL_TRAVEL_IMAGES['angkor-wat'] || getOfflineIllustration('Culture', 'Khmer New Year Angkor Sangkranta'),
     summary: 'The biggest holiday of the year! Celebrated in mid-April over 3 days (Moha Songkran, Virak Wanabat, Virak Loeung Sak). Cambodians return to home provinces, visit pagodas, splash water, and play traditional games like Teanh Tret (Tug of War).',
     details: 'Angkor Sangkranta in Siem Reap brings thousands together for traditional dance records, folk games, and festive celebrations under ancient temple lights.'
   }
@@ -396,24 +398,25 @@ export const ITINERARIES = [
 export const TRAVEL_GUIDE = {
   visa: {
     title: 'Visa & Entry Requirements',
-    type: 'e-Visa / Visa on Arrival',
+    type: 'e-Visa / Arrival',
     cost: '$30 Tourist Visa (30 Days)',
-    details: 'Most nationalities can apply easily online via the official eVisa portal (evisa.gov.kh) or obtain a Tourist Visa on Arrival at Siem Reap (SAI) and Phnom Penh (PNH) international airports.',
-    requirements: ['Passport valid for at least 6 months', '1 recent passport photo (or digital upload)', '1 blank passport page']
+    details: 'Apply easily online at evisa.gov.kh or obtain a Tourist Visa on Arrival at Siem Reap (SAI) and Phnom Penh (PNH) airports.',
+    requirements: ['Passport valid 6+ months', 'Passport photo / digital upload', '1 blank passport page']
   },
   currency: {
     title: 'Currency & Payment Tips',
-    usdRate: '1 USD = ~4,100 KHR (Cambodian Riel)',
-    details: 'US Dollars (USD) and Cambodian Riel (KHR) are accepted interchangeably everywhere in Cambodia! Change under $1 USD is given in Riel. Mobile QR payments (Bakong / ABA Pay) are ubiquitous in shops and restaurants.'
+    usdRate: '$1 = ~4,100 KHR',
+    details: 'US Dollars and Cambodian Riel (KHR) are accepted interchangeably. Mobile QR payments (ABA & Bakong) are supported everywhere.'
   },
   weather: [
-    { months: 'Nov - Feb', status: 'Cool & Dry (Peak Season)', desc: 'Warm sunny days (24°C - 30°C), low humidity. Ideal for temple exploring!' },
-    { months: 'Mar - May', status: 'Hot Season', desc: 'Temperatures rise to 35°C+. Perfect for coastal beach resorts in Koh Rong & Kampot.' },
-    { months: 'Jun - Oct', status: 'Green Season (Monsoon)', desc: 'Lush green landscapes, dramatic skies, fewer crowds, and majestic full moats at Angkor.' }
+    { months: 'Nov - Feb', status: 'Cool & Dry (Peak)', desc: 'Warm sunny days (24°C-30°C), low humidity. Ideal for temple exploring!' },
+    { months: 'Mar - May', status: 'Hot Season', desc: 'Sunny (35°C+). Perfect for island escapes in Koh Rong & Kampot.' },
+    { months: 'Jun - Oct', status: 'Green Season', desc: 'Lush green landscapes, fewer crowds, and dramatic skies at Angkor.' }
   ],
   gettingAround: [
-    { mode: 'PassApp / Grab Tuk-Tuk', desc: 'Inexpensive, convenient auto-rickshaws booked via smartphone apps ($1 - $3 per ride).' },
-    { mode: 'Express Bus & Minivan', desc: 'Comfortable air-conditioned buses connecting Siem Reap, Phnom Penh, and Kampot (Giant Ibis, Larryta).' },
-    { mode: 'Domestic Flights', desc: '45-minute direct flights between Phnom Penh and Siem Reap Angkor International Airport (SAI).' }
+    { mode: 'Grab / PassApp Tuk-Tuk', desc: 'Inexpensive, convenient auto-rickshaws booked via mobile apps ($1–$3).' },
+    { mode: 'Express Bus & Vans', desc: 'Comfortable air-conditioned buses connecting Siem Reap, Phnom Penh, Kampot.' },
+    { mode: 'Domestic Flights', desc: 'Direct 45-minute flights between Phnom Penh and Siem Reap (SAI).' }
   ]
 };
+

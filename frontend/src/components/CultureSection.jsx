@@ -25,15 +25,15 @@ export default function CultureSection({ lang }) {
     <section id="culture" className="site-section section-surface-alt relative">
       <div className="site-container">
         <div className="section-header">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-500 dark:text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
             <Utensils className="w-3.5 h-3.5" />
             <span>{getTranslation('culture.badge', lang)}</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
-            <span>{getTranslation('culture.titlePrefix', lang)} </span>
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
+            <span className="text-slate-900 dark:text-white">{getTranslation('culture.titlePrefix', lang)} </span>
             <span className="gold-gradient-text">{getTranslation('culture.titleHighlight', lang)}</span>
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-slate-600 dark:text-slate-300 text-base sm:text-lg max-w-2xl mx-auto font-medium">
             {getTranslation('culture.desc', lang)}
           </p>
         </div>
@@ -46,7 +46,7 @@ export default function CultureSection({ lang }) {
             className={`px-5 py-2.5 rounded-2xl text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
               activeTab === 'cuisine'
                 ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-lg shadow-amber-500/25'
-                : 'glass-card text-slate-700 dark:text-slate-300 hover:text-amber-500 border border-slate-200 dark:border-slate-800'
+                : 'glass-card text-slate-700 dark:text-slate-200 hover:text-amber-500 border border-slate-200 dark:border-slate-800'
             }`}
           >
             <Utensils className="w-4 h-4" />
@@ -59,7 +59,7 @@ export default function CultureSection({ lang }) {
             className={`px-5 py-2.5 rounded-2xl text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
               activeTab === 'culture'
                 ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-lg shadow-amber-500/25'
-                : 'glass-card text-slate-700 dark:text-slate-300 hover:text-amber-500 border border-slate-200 dark:border-slate-800'
+                : 'glass-card text-slate-700 dark:text-slate-200 hover:text-amber-500 border border-slate-200 dark:border-slate-800'
             }`}
           >
             <Music className="w-4 h-4" />
@@ -91,7 +91,7 @@ export default function CultureSection({ lang }) {
 
                   <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
                     <div>
-                      <div className="flex items-center gap-1 text-xs text-amber-500 dark:text-amber-400 font-bold mb-1">
+                      <div className="flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400 font-bold mb-1">
                         <Flame className="w-3.5 h-3.5 text-amber-500" />
                         <span>{food.spiciness}</span>
                       </div>

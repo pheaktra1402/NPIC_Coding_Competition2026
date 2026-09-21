@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Compass, Phone, Mail, MapPin, Send, Check } from 'lucide-react';
 import { subscribeNewsletterInAPI } from '../services/api';
+import { getTranslation } from '../data/translations';
 
 export default function Footer({ lang }) {
   const [newsletterEmail, setNewsletterEmail] = useState('');
@@ -26,14 +27,12 @@ export default function Footer({ lang }) {
               <div>
                 <div className="text-xl font-extrabold gold-gradient-text">CAMBODIA</div>
                 <div className="text-[10px] text-amber-300 uppercase tracking-widest khmer-font">
-                  {lang === 'EN' ? 'Kingdom of Wonder' : 'ព្រះរាជាណាចក្រកម្ពុជា'}
+                  {getTranslation('nav.kingdom', lang)}
                 </div>
               </div>
             </div>
             <p className="text-xs text-slate-300 leading-relaxed">
-              {lang === 'EN'
-                ? 'A practical travel guide for Cambodia: temples, islands, provinces, visas, and itineraries in one place.'
-                : 'មគ្គុទ្ទេសក៍ទេសចរណ៍កម្ពុជា៖ ប្រាសាទ កោះ ខេត្ត ទិដ្ឋាការ និងកម្មវិធីដំណើរ។'}
+              {getTranslation('footer.tagline', lang)}
             </p>
             <div className="space-y-2 text-xs">
               <div className="flex items-center gap-2 text-amber-400 font-bold">
@@ -53,15 +52,15 @@ export default function Footer({ lang }) {
 
           <div className="space-y-3">
             <h4 className="text-white text-sm font-bold uppercase tracking-wider">
-              {lang === 'EN' ? 'Explore' : 'តំបន់ទេសចរណ៍'}
+              {getTranslation('footer.quickLinks', lang)}
             </h4>
             <ul className="space-y-2.5 text-xs">
               {[
                 { href: '#destinations', label: 'Siem Reap & Angkor Wat' },
-                { href: '#destinations', label: 'Koh Rong islands' },
+                { href: '#destinations', label: 'Koh Rong Islands' },
                 { href: '#destinations', label: 'Phnom Penh Royal Palace' },
                 { href: '#destinations', label: 'Kampot & Kep' },
-                { href: '#culture', label: 'Apsara dance & cuisine' },
+                { href: '#culture', label: 'Apsara Dance & Cuisine' },
               ].map((link) => (
                 <li key={link.label}>
                   <a href={link.href} className="hover:text-amber-400 transition-colors">
@@ -74,15 +73,15 @@ export default function Footer({ lang }) {
 
           <div className="space-y-3">
             <h4 className="text-white text-sm font-bold uppercase tracking-wider">
-              {lang === 'EN' ? 'Tourist assistance' : 'លេខទូរស័ព្ទបន្ទាន់'}
+              {getTranslation('footer.contact', lang)}
             </h4>
             <div className="space-y-2.5 text-xs">
               <div className="p-3 rounded-xl glass-card border border-slate-800 space-y-1">
-                <div className="text-amber-400 font-bold">Tourist Police</div>
+                <div className="text-amber-400 font-bold">Tourist Police Hotline</div>
                 <div className="text-white font-extrabold">+855 23 724 789 / 117</div>
               </div>
               <div className="p-3 rounded-xl glass-card border border-slate-800 space-y-1">
-                <div className="text-amber-400 font-bold">Official e-Visa</div>
+                <div className="text-amber-400 font-bold">Official e-Visa Portal</div>
                 <a href="https://www.evisa.gov.kh" target="_blank" rel="noreferrer" className="text-slate-300 hover:text-amber-400">
                   evisa.gov.kh
                 </a>
@@ -92,24 +91,22 @@ export default function Footer({ lang }) {
 
           <div className="space-y-4">
             <h4 className="text-white text-sm font-bold uppercase tracking-wider">
-              {lang === 'EN' ? 'Travel updates' : 'ទទួលបានព័ត៌មានថ្មីៗ'}
+              {getTranslation('footer.newsletterTitle', lang)}
             </h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              {lang === 'EN'
-                ? 'Seasonal guides, festival dates, and trip ideas — no spam.'
-                : 'ចុះឈ្មោះដើម្បីទទួលបានព័ត៌មាន និងការផ្តល់ជូនពិសេស។'}
+              {getTranslation('footer.newsletterDesc', lang)}
             </p>
 
             {subscribed ? (
               <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center gap-2">
                 <Check className="w-4 h-4 text-amber-400" />
-                <span>{lang === 'EN' ? 'You are subscribed.' : 'ចុះឈ្មោះជោគជ័យ!'}</span>
+                <span>{getTranslation('footer.subscribed', lang)}</span>
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex items-center gap-2">
                 <input
                   type="email"
-                  placeholder={lang === 'EN' ? 'Your email' : 'អ៊ីមែលរបស់អ្នក'}
+                  placeholder={getTranslation('footer.emailPlaceholder', lang)}
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
                   className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:border-amber-400"
@@ -129,9 +126,9 @@ export default function Footer({ lang }) {
 
         <div className="pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-3">
           <p>
-            © {new Date().getFullYear()} Tourism in Cambodia — Kingdom of Wonder. All rights reserved. Developed by Thorn Chansopheaktra.
+            © {new Date().getFullYear()} Tourism in Cambodia — Kingdom of Wonder. {getTranslation('footer.rights', lang)} Developed by Thorn Chansopheaktra.
           </p>
-          <p className="khmer-font text-amber-400">ព្រះរាជាណាចក្រកម្ពុជា ជាតិ សាសនា ព្រះមហាក្សត្រ</p>
+          <p className="khmer-font text-amber-400 font-bold">ព្រះរាជាណាចក្រកម្ពុជា ជាតិ សាសនា ព្រះមហាក្សត្រ</p>
         </div>
       </div>
     </footer>

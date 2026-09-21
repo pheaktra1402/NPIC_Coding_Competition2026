@@ -13,6 +13,7 @@ import SearchPalette from './components/SearchPalette';
 import SavedTrip from './components/SavedTrip';
 import { Sparkles, ArrowUp } from 'lucide-react';
 import { useTrip } from './context/TripContext';
+import { getTranslation } from './data/translations';
 
 const SECTION_IDS = ['provinces', 'destinations', 'temples', 'culture', 'itineraries', 'travel-guide'];
 
@@ -39,7 +40,7 @@ export default function App() {
 
   useEffect(() => {
     localStorage.setItem('cambodia-lang', lang);
-    document.documentElement.lang = lang === 'KM' ? 'km' : 'en';
+    document.documentElement.lang = lang.toLowerCase();
   }, [lang]);
 
   useEffect(() => {
@@ -127,7 +128,7 @@ export default function App() {
         />
 
         <TempleSpotlight lang={lang} />
-        <CultureSection lang={lang} />
+        {/* <CultureSection lang={lang} /> */}
         <ItineraryPlanner onOpenBooking={handleOpenBooking} lang={lang} />
         <TravelGuide lang={lang} />
       </main>
@@ -178,10 +179,10 @@ export default function App() {
         <button
           type="button"
           onClick={() => handleOpenBooking()}
-          className="lg:hidden px-4 py-3 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 font-extrabold shadow-xl shadow-amber-500/30 flex items-center gap-2"
+          className="lg:hidden px-4 py-3 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 font-extrabold shadow-xl shadow-amber-500/30 flex items-center gap-2 cursor-pointer"
         >
           <Sparkles className="w-4 h-4" />
-          <span>{lang === 'EN' ? 'Plan trip' : 'រៀបចំដំណើរ'}</span>
+          <span>{getTranslation('nav.planTrip', lang)}</span>
         </button>
       </div>
     </div>

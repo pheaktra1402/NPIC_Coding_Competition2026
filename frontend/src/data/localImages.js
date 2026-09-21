@@ -1,29 +1,72 @@
-import bailenImg from '../assets/provinces/bailen.jpg';
-import banteayMeancheyImg from '../assets/provinces/banteaymeanchey.jpg';
-import btbImg from '../assets/provinces/btb.jpg';
-import siemReapImg from '../assets/provinces/images.jpg';
-import kampotImg from '../assets/provinces/kampot.jpg';
-import odorMeancheyImg from '../assets/provinces/odormeanchey.jpg';
-import pousatImg from '../assets/provinces/pousat.jpg';
-import preyvengImg from '../assets/provinces/preyveng.jpg';
-import takeoImg from '../assets/provinces/takeo.jpg';
-import tbkImg from '../assets/provinces/tbk.jpg';
+import kandalImg from '../assets/provinces/កណ្តាល.jpg';
+import kepImg from '../assets/provinces/កែប.jpg';
+import kohKongImg from '../assets/provinces/កោះកុង.jpg';
+import kampongChamImg from '../assets/provinces/កំពង់ចាម.jpg';
+import kampongChhnangImg from '../assets/provinces/កំពង់ឆ្នាំង.jpg';
+import kampongThomImg from '../assets/provinces/កំពង់ធំ.jpg';
+import kampongSpeuImg from '../assets/provinces/កំពង់ស្ពឺ.jpg';
+import kampotImg from '../assets/provinces/កំពត.jpg';
+import kratieImg from '../assets/provinces/ក្រចេះ.jpg';
+import takeoImg from '../assets/provinces/តាកែវ.jpg';
+import tbkImg from '../assets/provinces/ត្បូងឃ្មុំ.jpg';
+import banteayMeancheyImg from '../assets/provinces/បន្ទាយមានជ័យ.jpg';
+import btbImg from '../assets/provinces/បាត់ដំបង.jpg';
+import bailenImg from '../assets/provinces/ប៉ៃលិន.jpg';
+import pousatImg from '../assets/provinces/ពោធិ៍សាត់.jpg';
+import preyVengImg from '../assets/provinces/ព្រៃវែង.jpg';
+import preahVihearImg from '../assets/provinces/ព្រះវិហារ.jpg';
+import preahSihanoukImg from '../assets/provinces/ព្រះសីហនុ.jpg';
+import phnomPenhImg from '../assets/provinces/ភ្នំពេញ.jpg';
+import mondulkiriImg from '../assets/provinces/មណ្ឌលគិរី.jpg';
+import ratanakiriImg from '../assets/provinces/រតនគិរី.jpg';
+import siemReapImg from '../assets/provinces/សៀមរាប.jpg';
+import stungTrengImg from '../assets/provinces/ស្ទឹងត្រែង.jpg';
+import svayRiengImg from '../assets/provinces/ស្វាយរៀង.jpg';
+import odorMeancheyImg from '../assets/provinces/ឧត្តរមានជ័យ.jpg';
 
-// Map of province IDs to offline local imported image assets
+import angkorWatTravelImg from '../assets/travel/AngkorWat.jpg';
+import bayonTaProhmTravelImg from '../assets/travel/BayonTaProhm,.jpg';
+import kohRongTravelImg from '../assets/travel/KohRongKohRongSanloem.jpg';
+import mondulkiriTravelImg from '../assets/travel/Mondulkiri.jpg';
+
+// Map of all 25 provinces/capital to offline local imported image assets
 export const LOCAL_PROVINCE_IMAGES = {
   'siem-reap': siemReapImg,
-  'battambang': btbImg,
+  'phnom-penh': phnomPenhImg,
+  'preah-sihanouk': preahSihanoukImg,
   'kampot': kampotImg,
+  'kep': kepImg,
+  'battambang': btbImg,
+  'mondulkiri': mondulkiriImg,
+  'ratanakiri': ratanakiriImg,
+  'preah-vihear': preahVihearImg,
+  'kratie': kratieImg,
+  'stung-treng': stungTrengImg,
+  'koh-kong': kohKongImg,
+  'pursat': pousatImg,
   'banteay-meanchey': banteayMeancheyImg,
   'oddar-meanchey': odorMeancheyImg,
-  'pursat': pousatImg,
   'pailin': bailenImg,
-  'prey-veng': preyvengImg,
+  'kampong-cham': kampongChamImg,
+  'kampong-chhnang': kampongChhnangImg,
+  'kampong-speu': kampongSpeuImg,
+  'kampong-thom': kampongThomImg,
+  'kandal': kandalImg,
   'takeo': takeoImg,
+  'prey-veng': preyVengImg,
+  'svay-rieng': svayRiengImg,
   'tboung-khmum': tbkImg
 };
 
-// Helper SVG generator for offline fallback graphics when an online URL or local file is missing
+// Map of travel featured images
+export const LOCAL_TRAVEL_IMAGES = {
+  'angkor-wat': angkorWatTravelImg,
+  'bayon-ta-prohm': bayonTaProhmTravelImg,
+  'koh-rong': kohRongTravelImg,
+  'mondulkiri': mondulkiriTravelImg
+};
+
+// Helper SVG generator for offline fallback graphics if needed
 export const getOfflineIllustration = (category = 'Heritage', title = 'Cambodia') => {
   const encTitle = encodeURIComponent(title);
   
